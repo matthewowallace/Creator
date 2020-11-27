@@ -46,10 +46,8 @@
                 <Input type="password" v-model="data.password" placeholder="Enter Password"/>
                 <br>
                   <label>User Role</label>
-                <Select v-model="data.userType" style="width:100%" placeholder="Select User Role">
-                    <Option value="Admin">Admin</Option>
-                    <Option value="Editor">Editor</Option>
-                    <Option value="User">User</Option>
+                <Select v-model="data.role_id" style="width:100%" placeholder="Select User Role">
+                       <Option :value="r.id" v-for="(r,i) in roles" :key="i" v-if="roles.length">{{r.roleName}}</Option>
                 </Select>
 
                 <div slot="footer">
@@ -74,10 +72,8 @@
                 <br>
 
                   <label>User Role</label>
-                <Select v-model="editData.userType" style="width:100%" placeholder="Select User Role">
-                    <Option value="Admin">Admin</Option>
-                    <Option value="Editor">Editor</Option>
-                    <Option value="User">User</Option>
+                <Select v-model="editData.role_id" style="width:100%" placeholder="Select User Role">
+                    <Option :value="r.id" v-for="(r,i) in roles" :key="i" v-if="roles.length">{{r.roleName}}</Option>
                 </Select>
                 <div slot="footer">
                     <button @click="editModal=false">Close</button>
@@ -119,7 +115,8 @@
                     fullname: '',
                     email: '',
                     password: '',
-                    userType: 'Admin',
+                    // userType: 'Admin',
+                    role_id: null,
                 },
                 addtagmodal : false,
                 editModal:false,
@@ -135,7 +132,8 @@
                 DeleteModal: false,
                 isDeleting : false,
                 deleteItem: {},
-                deletingIndex: -1
+                deletingIndex: -1,
+                roles:[],
             }
         },
         methods: {
@@ -162,7 +160,7 @@
 				}
 
 			}
-},
+        },
 
             async editUser(){
                 if(this.editData.fullname.trim()=='') return this.error('Full name is required')
@@ -242,12 +240,24 @@
         },
 
                 async created(){
-                        const res = await this.callApi('get','app/get_adminusers')
+
+                        const [res, resRole] = await Promise.all([
+                            this.callApi('get','app/get_adminusers'),
+                            this.callApi('get', 'app/get_roles')
+                        ])
+
                         if(res.status==200){
                             this.currentusers = res.data
                         }else{
                             this.something()
                         }
+
+                        if(resRole.status==200){
+                            this.roles = resRole.data
+                        }else{
+                            this.something()
+                        }
+
                 },
 
 

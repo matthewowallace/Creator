@@ -35,6 +35,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js" integrity="sha256-3mBEX8I0uMLF7+AUjJeTCelosuorzYpqwBMBPDTyQqY=" crossorigin="anonymous"></script>
 
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
 
 
         {{-- <script src="{{ asset('js/js-mouse.js') }}"></script> --}}

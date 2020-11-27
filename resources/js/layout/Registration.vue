@@ -13,10 +13,12 @@
               </div>
         </router-link>
         <div class="register">
-                <div class="navbar">
-                   <YouthNavbar/>
-                </div>
-
+                 <router-link to="/" exact>
+                    <div class="mobile-title">
+                        <h3>YOUTH</h3>
+                        <h3 class="orange">CREATOR.</h3>
+                    </div>
+                 </router-link>
                 <div class="register-form">
                 <div class="sign--form">
                     <h3 class="sign-header">Registration</h3>
@@ -26,11 +28,17 @@
 
                       <Input v-model="username" type="text" picture_src="mail-outline.svg" placeholder="Enter your Username" :errors="inputerror.username" />
                         <Input v-model="registeremail"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" :errors="inputerror.registeremail" />
-                          <Input v-model="password" type="password" picture_src="eye-outline.svg" placeholder="Enter your Password" :errors="inputerror.password" />
+                           <PasswordInput v-model="password" placeholder="Enter your Password" :maxlength="30" :errors="inputerror.password"/>
                           <!-- <Input v-model="password_confirmation" type="password" picture_src="eye-outline.svg" placeholder="Enter your Password" :errors="inputerror.password_confirmation" /> -->
                         <br>
-                        <div class="register-btn">
-                            <button type="submit" value="Submit" :disable="this.isLogging" :loading="isLogging"> {{isLogging ? 'Creating....' : 'Register'}}</button>
+                       <div class="login-btn" v-if="isLogging">
+                            <button type="submit" value="Submit" :disable="this.isLogging" :loading="isLogging">Register</button>
+                        </div>
+                        <div class="login-btn-2" v-else>
+                            <button>
+                                <div><h4>Creating...</h4></div>
+                                <div class="animation"><lottie-player src="https://assets8.lottiefiles.com/packages/lf20_vIuhQq.json"  background="transparent"  speed="1"  style="width: 80px; height: 80px;"  loop  autoplay></lottie-player></div>
+                            </button>
                         </div>
                          <div class="SignIn">
                         <p>Already have an account
@@ -68,11 +76,13 @@
 <script>
 import Input from "../components/Input"
 import YouthNavbar from '../components/YouthNavbar'
+import PasswordInput from '../components/PasswordInput'
 export default {
 
    components:{
         Input,
         YouthNavbar,
+        PasswordInput,
     },
 
      data: ()=> {
@@ -82,7 +92,7 @@ export default {
             username: "",
             registeremail: "",
             inputerror: {},
-            isLogging: false,
+            isLogging: true,
         }
     },
     methods: {
@@ -92,7 +102,7 @@ export default {
                 if(!this.registeremail.trim()) this.inputerror.registeremail = "Email  is required";
                 if(!this.password.trim()) this.inputerror.password = "Password  is required";
                 // if(!this.password_confirmation.trim()) this.inputerror.password_confirmation = "Password  is required";
-
+                this.isLogging =  false;
 
                 if(Object.keys(this.inputerror).length) return;
 
@@ -248,7 +258,25 @@ export default {
         margin-top: 60px;
     }
 
-    .register-btn button{
+     .animation{
+        position: absolute;
+        top:-45%;
+        left:55%;
+    }
+
+    .login-btn-2 div{
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-btn-2 button h4{
+       color:  #fff;
+       font-weight: 500;
+       font-size: 12px;
+    }
+
+    .login-btn-2 button{
        padding: 10px 40px;
        width: 60%;
        background-color:#303030;
@@ -258,7 +286,22 @@ export default {
        border-radius: 6px;
     }
 
-    .register-btn button:hover{
+
+    .login-btn-2{
+        position: relative;
+    }
+
+    .login-btn button{
+       padding: 10px 40px;
+       width: 60%;
+       background-color:#303030;
+       transition: 1s ease-in-out;
+       color:  #fff;
+       font-weight: 500;
+       border-radius: 6px;
+    }
+
+    .login-btn button:hover{
         letter-spacing: 2px;
         transform: translateY(-3px);
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1), 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
@@ -358,6 +401,15 @@ export default {
         left: 66.6%;
     }
 
+    .mobile-title h3{
+    font-family: 'Fenotype',sans-serif !important;
+    display: inline-block;
+   }
+
+    .mobile-title{
+        display: none;
+     }
+
     .registration{
         position: relative;
     }
@@ -388,62 +440,6 @@ export default {
         filter: hue-rotate(360deg);
       }
     }
-
-    /* Smartphones (portrait) ----------- */
-@media only screen
-and (max-width : 420px) {
-
-
-    .brand-title{
-        display: none;
-    }
-
-    .login-info{
-        display: none;
-    }
-
-       .login-form{
-        display: flex;
-        flex-grow: 1;
-        padding: 10px;
-        /* background-image: url('../../../assets/paint.png');
-         background-size:cover;
-         background-repeat: no-repeat; */
-    }
-
-     .sign--form{
-        flex-wrap: wrap;
-        flex-basis: 100%;
-        border: none;
-    }
-    .navbar{
-        display: block;
-    }
-
-    .sign-header{
-        flex-basis: 100%;
-        text-align: center;
-        font-size: 50px;
-        color: #303030;
-        margin: 0 45px;
-        margin-top: 0%;
-        text-transform: uppercase;
-
-    }
-
-    .register-form[data-v-d72b8a5e] {
-        display: flex;
-        flex-basis: 30%;
-        flex-grow: 1;
-        padding: 0px;
-    }
-
-      .sign-para{
-        font-size: 12px;
-    }
-
-}
-
 
 
 
@@ -524,6 +520,68 @@ and (max-width : 1366px) {
         text-align: center;
         margin-top: 38px;
     }
+
+}
+
+    /* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 420px) {
+
+
+    .brand-title{
+        display: none;
+    }
+
+    .login-info{
+        display: none;
+    }
+
+       .login-form{
+        display: flex;
+        flex-grow: 1;
+        padding: 10px;
+        /* background-image: url('../../../assets/paint.png');
+         background-size:cover;
+         background-repeat: no-repeat; */
+    }
+
+     .sign--form{
+        flex-wrap: wrap;
+        flex-basis: 100%;
+        border: none;
+    }
+    .navbar{
+        display: block;
+    }
+
+    .sign-header{
+        flex-basis: 100%;
+        text-align: center;
+        font-size: 40px;
+        color: #303030;
+        margin: 0 45px;
+        margin-top: 0%;
+        text-transform: uppercase;
+
+    }
+
+    .register-form[data-v-d72b8a5e] {
+        display: flex;
+        flex-basis: 30%;
+        flex-grow: 1;
+        padding: 0px;
+    }
+
+      .sign-para{
+        font-size: 12px;
+    }
+
+    .mobile-title{
+        display: flex;
+        margin-left: 60%;
+        margin-top: 20px;
+        margin-bottom: 0px;
+     }
 
 }
 

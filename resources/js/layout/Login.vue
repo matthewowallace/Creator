@@ -7,6 +7,12 @@
          <div class="overlay third-1"></div>
 
         <div class="login">
+              <router-link to="/" exact>
+                    <div class="mobile-title">
+                        <h3>YOUTH</h3>
+                        <h3 class="orange">CREATOR.</h3>
+                    </div>
+                 </router-link>
             <div class="login-info">
                  <router-link to="/" exact>
                     <div class="brand-title">
@@ -32,9 +38,6 @@
                     <img  src="../../assets/3.png" alt="aboutus icon">
                 </div>
             </div>
-              <div class="navbar">
-                    <YouthNavbar/>
-                </div>
             <div class="login-form">
                 <div class="sign--form">
                     <h3 class="sign-header">Login</h3>
@@ -127,6 +130,17 @@ export default {
     top:2%;
     left:4%;
    }
+
+   .mobile-title h3{
+    font-family: 'Fenotype',sans-serif !important;
+    display: inline-block;
+   }
+
+    .mobile-title{
+        display: none;
+     }
+
+
 
     .brand-title h3{
     font-family: 'Fenotype',sans-serif !important;
@@ -332,6 +346,66 @@ export default {
       }
 }
 
+/* Desktops and laptops ----------- */
+@media only screen
+and (max-width : 1366px) {
+
+    .login-info{
+        display: flex;
+        flex-basis: 60%;
+        flex-grow: 2;
+        position: relative;
+    }
+
+    .info img{
+        max-width: 207px;
+        margin-right: 2px;
+        margin-top: 15px;
+    }
+
+    .info-3{
+        font-size: 52px;
+        color: #303030;
+        margin-bottom: 10px;
+    }
+
+    .info-1{
+        font-size: 30px;
+        color: #303030;
+        margin-top: 30px;
+    }
+
+    .sign-header{
+        flex-basis: 100%;
+        text-align: center;
+        font-size: 38px;
+        color: #303030;
+        margin: 0 45px;
+        margin-top: 30%;
+        text-transform: uppercase;
+    }
+
+        .sign-para{
+        flex-basis: 100%;
+        text-align: center;
+        font-size: 13px;
+        color: #686868;
+        margin-top: 10px;
+        margin-bottom: -40px;
+    }
+
+    .login-form{
+        display: flex;
+        flex-basis: 30%;
+        flex-grow: 1;
+        padding: 20px;
+    }
+
+    .info-2{
+        font-size: 30px;
+    }
+
+}
 
 /* Smartphones (portrait) ----------- */
 @media only screen
@@ -370,66 +444,12 @@ and (max-width : 420px) {
 
     }
 
-}
-
-/* Desktops and laptops ----------- */
-@media only screen
-and (max-width : 1366px) {
-
-    .login-info{
+     .mobile-title{
         display: flex;
-        flex-basis: 60%;
-        flex-grow: 2;
-        position: relative;
-    }
-
-    .info img{
-        max-width: 207px;
-        margin-right: 2px;
-        margin-top: 15px;
-    }
-
-    .info-3{
-        font-size: 52px;
-        color: #303030;
-        margin-bottom: 10px;
-    }
-
-    .info-1{
-        font-size: 30px;
-        color: #303030;
-        margin-top: 30px;
-    }
-
-        .sign-header{
-        flex-basis: 100%;
-        text-align: center;
-        font-size: 38px;
-        color: #303030;
-        margin: 0 45px;
-        margin-top: 30%;
-        text-transform: uppercase;
-    }
-
-        .sign-para{
-        flex-basis: 100%;
-        text-align: center;
-        font-size: 13px;
-        color: #686868;
-        margin-top: 10px;
-        margin-bottom: -40px;
-    }
-
-    .login-form{
-        display: flex;
-        flex-basis: 30%;
-        flex-grow: 1;
-        padding: 20px;
-    }
-
-    info-2{
-        font-size: 30px;
-    }
+        margin-left: 60%;
+        margin-top: 20px;
+         margin-bottom: 20px;
+     }
 
 }
 

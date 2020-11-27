@@ -7,36 +7,32 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Resources\TagsResource;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
+
 {
-
-
     public function index(Request $request)
     {
-        // if (!Auth::check() && $request->path() != 'login') {
-        //     return redirect('/login');
-        // }
 
-        // if (!Auth::check() && $request->path() == 'login') {
-        //     $user = Auth::user();
-        //     if (Auth::check() && $user->role_id == 'User') {
-        //         return redirect('/dashboard');
-        //     }
-        //     if (Auth::check() && $user->role_id == 'Admin') {
-        //         return redirect('/admin');
-        //     }
-        //     if (Auth::check() && $user->role_id == 'Contributor') {
-        //         return redirect('/dashboard');
-        //     }
-        //     if (Auth::check() && $user->role_id == 'Moderator') {
-        //         return redirect('/admin');
-        //     }
-        // }
+        if (!Auth::check() && $request->path() != 'login') {
+            return redirect('/login');
+        }
+
+        if (!Auth::check() && $request->path() == 'login') {
+            return view('welcome');
+        }
+
+        $user = Auth::user();
+        if ($user->role_id == 'User') {
+            return redirect('/dashboard');
+        }
+        if ($request->path() == 'login') {
+            return redirect('/admin');
+        }
          return view('welcome');
+
     }
 
     public function addTag(Request $request){
@@ -142,14 +138,14 @@ class AdminController extends Controller
     public function addAdmin(Request $request){
          //validate request
          $this->validate($request, [
-            'username' => 'required',
+            'fullname' => 'required',
             'email' => 'bail|required|email|unique:users',
             'password' => 'bail|required|min:6',
             'role_id' => 'required'
         ]);
         $password = bcrypt($request->password);
         $user = User::create([
-            'username' => $request->username,
+            'fullname' => $request->fullname,
             'email' => $request->email,
             'password' => $password,
             'role_id' => $request->role_id
@@ -165,14 +161,14 @@ class AdminController extends Controller
    public function editAdminUsers(Request $request){
         //validate request
         $this->validate($request, [
-            'username' => 'required',
+            'fullname' => 'required',
             'email' => "bail|required|email|unique:users,email,$request->id",
             'role_id' => 'required',
             'password' => 'min:6',
         ]);
 
         $data = [
-            'username' => $request ->username,
+            'fullname' => $request ->fullname,
             'email' => $request->email,
             'role_id' => $request->role_id,
         ];

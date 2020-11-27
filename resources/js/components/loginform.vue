@@ -1,13 +1,19 @@
 <template>
   <form class="form-1" @submit.prevent="login" action="/" method="post" novalidate="true">
          <Input v-model="useremail"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" :errors="inputerror.useremail" />
-         <Input v-model="password" type="password" picture_src="eye-outline.svg" placeholder="Enter your Password" :errors="inputerror.password" />
+         <PasswordInput v-model="password" placeholder="Enter your Password" :maxlength="30" :errors="inputerror.password"/>
          <div class="forgot">
              <a>Forgot Password ?</a>
         </div>
           {{generalError}}
-        <div class="login-btn">
-            <button type="submit" value="Submit" :disable="this.isLogging" :loading="isLogging">{{isLogging ? 'Logging....' : 'Signin'}}</button>
+        <div class="login-btn" v-if="isLogging">
+            <button type="submit" value="Submit" :disable="this.isLogging" :loading="isLogging">Signin</button>
+        </div>
+         <div class="login-btn-2" v-else>
+             <button>
+                 <div><h4>Loading</h4></div>
+                 <div class="animation"><lottie-player src="https://assets8.lottiefiles.com/packages/lf20_vIuhQq.json"  background="transparent"  speed="1"  style="width: 80px; height: 80px;"  loop  autoplay></lottie-player></div>
+             </button>
         </div>
         <div class="Signup">
              <p>Dont have an account
@@ -22,11 +28,13 @@
 <script>
 import Axios from 'axios';
 import Input from './Input';
+import PasswordInput from './PasswordInput.vue';
 export default {
 
     name: "loginform",
     components : {
         Input,
+        PasswordInput,
     },
     data:()=> {
         return {
@@ -111,6 +119,39 @@ export default {
 </script>
 
 <style scoped>
+
+    .animation{
+        position: absolute;
+        top:-45%;
+        left:55%;
+    }
+
+    .login-btn-2 div{
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-btn-2 button h4{
+       color:  #fff;
+       font-weight: 500;
+       font-size: 12px;
+    }
+
+    .login-btn-2 button{
+       padding: 10px 40px;
+       width: 60%;
+       background-color:#303030;
+       transition: 1s ease-in-out;
+       color:  #fff;
+       font-weight: 500;
+       border-radius: 6px;
+    }
+
+
+    .login-btn-2{
+        position: relative;
+    }
 
     .form-1{
         flex-basis: 100%;

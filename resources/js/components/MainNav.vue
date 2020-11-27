@@ -117,9 +117,7 @@
             =============================== -->
             <div class="sponsor">
             <!-- <img src="./images/sponsor-logo.png" alt=""> -->
-                <button type="button" uk-toggle="target: #offcanvas-push">
-                    FOR DESIGNERS & ARTISTE
-                </button>
+                 <h4>FOR DESIGNERS & ARTISTE</h4>
             </div>
 
             <!-- DISTORTION
@@ -563,13 +561,13 @@ ul {
 =========================== */
 .sponsor {
   position: absolute;
-  left:20%;
+  left:15%;
   top:47%;
   /* transform: rotate(-270deg); */
   text-align: center;
 }
 
-.sponsor button {
+.sponsor h4 {
   margin-top: 20px;
   font-size: 14px;
   font-family: 'Poppins' !important;
@@ -580,13 +578,6 @@ ul {
   background-color: transparent;
   padding: 15px;
 }
-
-.sponsor button:focus{
-    background-color: #EC6110;
-    animation: hue-rotate 10s linear infinite;
-    outline: none;
-}
-
 
 /* DISTORTION
 =========================== */
@@ -837,7 +828,7 @@ and (max-width : 1366px) {
     text-transform: uppercase;
     }
 
-    .sponsor button {
+    .sponsor h4 {
         margin-top: 20px;
         font-size: 12px;
         font-family: 'Poppins' !important;

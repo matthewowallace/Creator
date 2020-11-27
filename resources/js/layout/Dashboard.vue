@@ -107,7 +107,13 @@
                                     mollit anim id est laborum.
                                 </p>
                             </div>
-                            <hr />
+                            <hr/>
+                            <button class="social">
+                                 <Icon type="md-heart" size="22"/>
+                            </button>
+                            <button class="social">
+                                <Icon type="ios-chatbubbles" size="22"/>
+                            </button>
                         </div>
                         <div class="senario-card">
                             <div class="user-img">
@@ -163,6 +169,8 @@
                                 </p>
                             </div>
                             <hr />
+                            <Icon type="md-heart" size="22"/>
+                            <Icon type="ios-chatbubbles" size="22"/>
                         </div>
                     </div>
                 </div>
@@ -516,6 +524,13 @@ export default {
 </script>
 
 <style scoped>
+
+.social{
+    margin:4px;
+    margin-top: 8px;
+    color: #b8b8b8;
+}
+
 .contributors {
     margin: 10px 0px;
     z-index: -90;
