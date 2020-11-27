@@ -201,6 +201,9 @@ export default {
 
 <style scoped>
 
+.ivu-menu-light {
+    background: transparent;
+}
 .management{
     margin-top: 20px;
 }

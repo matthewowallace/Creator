@@ -111,11 +111,11 @@
 </template>
 
 <script>
-import PostChart from './Postchart'
+import Category from './Category'
 export default {
 
    components :{
-        PostChart,
+        Category,
       },
 
    methods: {
@@ -393,6 +393,9 @@ button{
     margin-right: 20px;
 }
 
+.ivu-menu-light {
+    background: transparent;
+}
 
 /* OVERLAY
 =========================== */

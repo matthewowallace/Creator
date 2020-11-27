@@ -13,8 +13,8 @@
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
-        <link rel="shortcut icon" href="{{ asset('images/YCv2.png') }}" />
-        <link rel="icon" href="{{ asset('images/YCv2.png') }}" />
+        <link rel="shortcut icon" href="{{ asset('images/yc.png') }}" />
+        <link rel="icon" href="{{ asset('images/yc.png') }}" />
 
         <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>

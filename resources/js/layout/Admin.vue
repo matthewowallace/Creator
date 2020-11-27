@@ -61,7 +61,6 @@
                           <Submenu name="2">
                                 <template slot="title">
                                     <Icon type="ios-contact" />
-                                Account
                                 </template>
                                 <MenuGroup title="Account Setttings">
                                 <router-link to="/userprofile"> <MenuItem name="3-1">Account Profile</MenuItem></router-link>

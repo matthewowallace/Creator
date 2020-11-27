@@ -21,7 +21,7 @@
          </div>
      </div>
      <div class="profile--img">
-         <img  src="../../../assets/8.png" alt="profile image">
+         <img  src="../../assets/8.png" alt="profile image">
      </div>
 
      </div>
