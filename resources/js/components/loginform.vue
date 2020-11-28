@@ -40,7 +40,7 @@ export default {
         return {
 
              password: "",
-             username: "",
+             name: "",
              useremail: "",
              inputerror: {},
              generalError: "",
@@ -49,21 +49,7 @@ export default {
     },
 
     mounted() {
-        if(this.$store.state.token !== ''){
-            axios.post('/api/checkToken', {token : this.$store.state.token})
-            .then(res => {
-                if(res){
-                    this.isLogging = false;
-                    this.$router.push('/dashboard');
-                }
-            })
-            .catch(err => {
-                this.loading = false;
-                this.$store.commit('clearToken');
-            })
-        }else{
-            this.loading = false;
-        }
+
     },
 
 
@@ -75,40 +61,42 @@ export default {
               if(!this.password.trim()) this.inputerror.password = "Password  is required";
               this.isLogging =  false;
 
-            const fd = new FormData();
-            fd.append('email',this.useremail);
-            fd.append('password',this.password)
 
-            //  const res = await this.callApi('post', '/api/login', fd)
+              const data = {
+                    name: this.name,
+                    email: this.useremail,
+                    password: this.password,
+               }
 
-            axios.post('/api/login', fd)
-                .then(res => {
-                    if(res.data.success){
+              const res = await this.callApi('post', '/login', data)
+
+                // axios.post('/api/login', fd)
+                //     .then(res => {
+                //         if(res.data.success){
+                //         this.$router.push('/dashboard');
+                //         }
+                //      })
+                //      .catch(err=>{
+                //          console.log('Error')
+                //      })
+
+
+                if(res.status===200){
+                    this.success(res.data.msg);
                     this.$router.push('/dashboard');
+                }else{
+                    if(res.status===401){
+                        this.info(res.data.msg)
+                    }else if(res.status===422){
+                        for(let i in res.data.errors){
+                            this.error(res.data.errors[i][0])
+                        }
                     }
-                 })
-                 .catch(err=>{
-                     console.log('Error')
-                 })
-
-
-            // if(res.status===200){
-            //      this.success(res.data.msg)
-            //      this.$store.commit('setToken', res.data.token);
-            //      this.$router.push('/dashboard');
-            //  }else{
-            //      if(res.status===401){
-            //          this.info(res.data.msg)
-            //      }else if(res.status===422){
-            //          for(let i in res.data.errors){
-            //              this.error(res.data.errors[i][0])
-            //          }
-            //      }
-            //      else{
-            //          this.swr()
-            //      }
-            //      this.isLogging = false
-            //  }
+                    else{
+                        this.swr()
+                    }
+                    this.isLogging = false
+                }
         },
 
     },

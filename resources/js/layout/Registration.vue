@@ -26,7 +26,7 @@
                     <p class="sign-para">Create an account to continue to our application</p>
                     <form class="form-1" @submit.prevent="register" action="/" method="post" novalidate="true">
 
-                      <Input v-model="username" type="text" picture_src="mail-outline.svg" placeholder="Enter your Username" :errors="inputerror.username" />
+                      <Input v-model="name" type="text" picture_src="mail-outline.svg" placeholder="Enter your name" :errors="inputerror.name" />
                         <Input v-model="registeremail"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" :errors="inputerror.registeremail" />
                            <PasswordInput v-model="password" placeholder="Enter your Password" :maxlength="30" :errors="inputerror.password"/>
                           <!-- <Input v-model="password_confirmation" type="password" picture_src="eye-outline.svg" placeholder="Enter your Password" :errors="inputerror.password_confirmation" /> -->
@@ -87,9 +87,8 @@ export default {
 
      data: ()=> {
         return {
-            password_confirmation: "",
             password: "",
-            username: "",
+            name: "",
             registeremail: "",
             inputerror: {},
             isLogging: true,
@@ -98,7 +97,7 @@ export default {
     methods: {
             async register(){
                 this.inputerror = {};
-                if(!this.username.trim()) this.inputerror.username = "Username  is required";
+                if(!this.name.trim()) this.inputerror.name = "name  is required";
                 if(!this.registeremail.trim()) this.inputerror.registeremail = "Email  is required";
                 if(!this.password.trim()) this.inputerror.password = "Password  is required";
                 // if(!this.password_confirmation.trim()) this.inputerror.password_confirmation = "Password  is required";
@@ -107,24 +106,28 @@ export default {
                 if(Object.keys(this.inputerror).length) return;
 
                 const data = {
-                    username: this.username,
+                    name: this.name,
                     email: this.registeremail,
                     password: this.password,
                     // password_confirmation: this.password_confirmation,
                 }
 
                     this.isLogging =  true;
-                    const res = await this.callApi('post', 'api/register', data)
+                    const res = await this.callApi('post', '/register', data)
                     if(res.status===200){
                         this.success(res.data.msg)
                         this.isLogging = false
                     }else{
                         if(res.status===401){
+
                             this.info(res.data.msg)
+
                         }else if(res.status===422){
+
                             for(let i in res.data.errors){
                                 this.error(res.data.errors[i][0])
                             }
+
                         }
                         else{
                             this.swr()
@@ -136,7 +139,7 @@ export default {
     },
 
   mounted: function(){
-    TweenMax.to(".first-1", 1.5, {
+           TweenMax.to(".first-1", 1.5, {
               delay: .5,
                y:"-100%",
               ease: Expo.easeInOut

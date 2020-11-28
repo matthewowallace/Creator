@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 
 {
+
     public function index(Request $request)
     {
 
@@ -138,14 +139,14 @@ class AdminController extends Controller
     public function addAdmin(Request $request){
          //validate request
          $this->validate($request, [
-            'fullname' => 'required',
+            'name' => 'required',
             'email' => 'bail|required|email|unique:users',
             'password' => 'bail|required|min:6',
             'role_id' => 'required'
         ]);
         $password = bcrypt($request->password);
         $user = User::create([
-            'fullname' => $request->fullname,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => $password,
             'role_id' => $request->role_id
@@ -161,14 +162,14 @@ class AdminController extends Controller
    public function editAdminUsers(Request $request){
         //validate request
         $this->validate($request, [
-            'fullname' => 'required',
+            'name' => 'required',
             'email' => "bail|required|email|unique:users,email,$request->id",
             'role_id' => 'required',
             'password' => 'min:6',
         ]);
 
         $data = [
-            'fullname' => $request ->fullname,
+            'name' => $request ->name,
             'email' => $request->email,
             'role_id' => $request->role_id,
         ];

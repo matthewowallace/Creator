@@ -2,12 +2,9 @@
 
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
-use App\Http\Middleware\AdminCheck;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,21 +48,6 @@ Route::middleware('auth:api')->get('/user',function (Request $request) {
 // Route::get('/athenticated', function (Request $request){
 //     return true;
 // });
-
-Route::group(['prefix' => 'api'], function () {
-
-    Route::get('/me', [UserController::class, 'user']);
-    Route::get('/me/dates', [UserController::class, 'dates']);
-    Route::post('/register', [RegisterController::class, 'getRegister']);
-    Route::post('/login', [LoginController::class, 'getLogin']);
-    Route::get('/user/{id}',[UserController::class, 'profile']);
-    Route::post('/update/user', [UserController::class, 'updates']);
-    Route::post('/update/password/user', [UserController::class, 'changePassword']);
-    Route::post('/logout', [LoginController::class, 'logout']);
-    Route::post('/checkToken', [LoginController::class, 'checkToken']);
-
-});
-
 
 Route::get('/', [AdminController::class, 'index']);
 Route::any('{slug}', [AdminController::class, 'index']);
