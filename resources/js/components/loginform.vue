@@ -1,11 +1,11 @@
 <template>
   <form class="form-1" @submit.prevent="login" action="/" method="post" novalidate="true">
-         <Input v-model="useremail"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" :errors="inputerror.useremail" />
-         <PasswordInput v-model="password" placeholder="Enter your Password" :maxlength="30" :errors="inputerror.password"/>
-         <div class="forgot">
+         <Input v-model="user.useremail"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" />
+         <PasswordInput v-model="user.password" placeholder="Enter your Password" :maxlength="30" />
+        <div class="forgot">
              <a>Forgot Password ?</a>
         </div>
-          {{generalError}}
+
         <div class="login-btn" v-if="isLogging">
             <button type="submit" value="Submit" :disable="this.isLogging" :loading="isLogging">Signin</button>
         </div>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import * as auth from '../auth_services';
 import Axios from 'axios';
 import Input from './Input';
 import PasswordInput from './PasswordInput.vue';
@@ -38,12 +39,12 @@ export default {
     },
     data:()=> {
         return {
+            user:{
+                password: "",
+                useremail: "",
+            },
 
-             password: "",
-             name: "",
-             useremail: "",
-             inputerror: {},
-             generalError: "",
+            //  inputerror: {},
              isLogging: true,
         }
     },
@@ -56,48 +57,53 @@ export default {
     methods: {
 
         async login(){
-              this.inputerror = {};
-              if(!this.useremail.trim()) this.inputerror.useremail = "Email  is required";
-              if(!this.password.trim()) this.inputerror.password = "Password  is required";
-              this.isLogging =  false;
+            //   this.inputerror = {};
+            //   if(!this.useremail.trim()) this.inputerror.useremail = "Email  is required";
+            //   if(!this.password.trim()) this.inputerror.password = "Password  is required";
 
+                // const res = await this.callApi('post', '/login', user)
 
-              const data = {
-                    name: this.name,
-                    email: this.useremail,
-                    password: this.password,
-               }
-
-              const res = await this.callApi('post', '/login', data)
-
-                // axios.post('/api/login', fd)
-                //     .then(res => {
-                //         if(res.data.success){
-                //         this.$router.push('/dashboard');
+                // if(res.status===200){
+                //     this.success(res.data.msg);
+                //      localStorage.setItem('larave-vue-spa-token',JSON.stringify(res.data));
+                //     this.$router.push('/dashboard');
+                // }else{
+                //     if(res.status===401){
+                //         this.info(res.data.msg)
+                //     }else if(res.status===422){
+                //         for(let i in res.data.errors){
+                //             this.error(res.data.errors[i][0])
                 //         }
-                //      })
-                //      .catch(err=>{
-                //          console.log('Error')
-                //      })
+                //     }
+                //     else{
+                //         this.swr()
+                //     }
+                //     this.isLogging = false
+                // }
 
-
-                if(res.status===200){
-                    this.success(res.data.msg);
+                try{
+                    const response = await auth.login(this.user);
+                    this.errors = {};
                     this.$router.push('/dashboard');
-                }else{
-                    if(res.status===401){
-                        this.info(res.data.msg)
-                    }else if(res.status===422){
-                        for(let i in res.data.errors){
-                            this.error(res.data.errors[i][0])
-                        }
-                    }
-                    else{
-                        this.swr()
-                    }
-                    this.isLogging = false
+                } catch (error){
+                  switch(error.response.status){
+                      case 422:
+                          this.error(error.response.data.message);
+                          break;
+                      case 401:
+                           this.info(error.response.data.message);
+                           break;
+                      case 500:
+                           this.swr(error.response.data.message);
+                           break;
+
+                  }
                 }
+
+
+                this.isLogging =  false;
         },
+
 
     },
 

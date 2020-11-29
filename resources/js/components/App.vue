@@ -301,6 +301,34 @@ body::-webkit-scrollbar-thumb {
         position: relative;
     }
 
+    .ivu-notice-notice{
+        background-color: #303030ea !important;
+        color:#fff !important;
+    }
+
+    .ivu-notice-desc {
+        font-size: 10px !important;
+        color: #fff !important;
+        text-align: justify;
+         font-family: 'Poppins' !important;
+        line-height: 1.5;
+    }
+
+    .ivu-notice-notice-content{
+         color:#fff !important;
+    }
+
+    .ivu-notice-title {
+        font-size: 20px;
+        font-family: 'Poppins' !important;
+        font-weight:bold;
+        line-height: 19px;
+        color: #fff !important;
+        padding-right: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
 
 

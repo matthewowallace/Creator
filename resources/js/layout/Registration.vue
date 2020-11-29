@@ -26,9 +26,9 @@
                     <p class="sign-para">Create an account to continue to our application</p>
                     <form class="form-1" @submit.prevent="register" action="/" method="post" novalidate="true">
 
-                      <Input v-model="name" type="text" picture_src="mail-outline.svg" placeholder="Enter your name" :errors="inputerror.name" />
-                        <Input v-model="registeremail"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" :errors="inputerror.registeremail" />
-                           <PasswordInput v-model="password" placeholder="Enter your Password" :maxlength="30" :errors="inputerror.password"/>
+                      <Input v-model="user.name" type="text" picture_src="mail-outline.svg" placeholder="Enter your name" />
+                        <Input v-model="user.email"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address"  />
+                           <PasswordInput v-model="user.password" placeholder="Enter your Password" :maxlength="30" />
                           <!-- <Input v-model="password_confirmation" type="password" picture_src="eye-outline.svg" placeholder="Enter your Password" :errors="inputerror.password_confirmation" /> -->
                         <br>
                        <div class="login-btn" v-if="isLogging">
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import * as auth from '../auth_services';
 import Input from "../components/Input"
 import YouthNavbar from '../components/YouthNavbar'
 import PasswordInput from '../components/PasswordInput'
@@ -87,55 +88,72 @@ export default {
 
      data: ()=> {
         return {
-            password: "",
-            name: "",
-            registeremail: "",
-            inputerror: {},
+            user:{
+                password: "",
+                name: "",
+                email: "",
+            },
+            // inputerror: {},
             isLogging: true,
         }
     },
     methods: {
             async register(){
-                this.inputerror = {};
-                if(!this.name.trim()) this.inputerror.name = "name  is required";
-                if(!this.registeremail.trim()) this.inputerror.registeremail = "Email  is required";
-                if(!this.password.trim()) this.inputerror.password = "Password  is required";
+                // this.inputerror = {};
+                // if(!this.name.trim()) this.inputerror.name = "name  is required";
+                // if(!this.email.trim()) this.inputerror.email = "Email  is required";
+                // if(!this.password.trim()) this.inputerror.password = "Password  is required";
                 // if(!this.password_confirmation.trim()) this.inputerror.password_confirmation = "Password  is required";
                 this.isLogging =  false;
 
-                if(Object.keys(this.inputerror).length) return;
+                // if(Object.keys(this.inputerror).length) return;
 
-                const data = {
-                    name: this.name,
-                    email: this.registeremail,
-                    password: this.password,
-                    // password_confirmation: this.password_confirmation,
+
+
+                try{
+                    const response = await auth.register(this.user);
+                    this.errors = {};
+                    this.$router.push('/login');
+                } catch (error){
+                  switch(error.response.status){
+                      case 422:
+                          this.error(error.response.data.message,"Invalid or Taken");
+                          break;
+                      case 401:
+                           this.info(error.response.data.message);
+                           break;
+                      case 500:
+                           this.swr(error.response.data.message);
+                           break;
+
+                  }
                 }
 
-                    this.isLogging =  true;
-                    const res = await this.callApi('post', '/register', data)
-                    if(res.status===200){
-                        this.success(res.data.msg)
-                        this.isLogging = false
-                    }else{
-                        if(res.status===401){
+                    // this.isLogging =  true;
+                    // const res = await this.callApi('post', '/register', data)
+                    // if(res.status===200){
+                    //     this.success(res.data.message)
+                    //     this.$router.push('/login');
+                    //     this.isLogging = true
+                    // }else{
+                    //     if(res.status===401){
 
-                            this.info(res.data.msg)
+                    //         this.info(res.data.message)
 
-                        }else if(res.status===422){
+                    //     }else if(res.status===422){
 
-                            for(let i in res.data.errors){
-                                this.error(res.data.errors[i][0])
-                            }
+                    //         for(let i in res.data.errors){
+                    //             this.error(res.data.errors[i][0])
+                    //         }
 
-                        }
-                        else{
-                            this.swr()
-                        }
-                        this.isLogging = false
-                    }
+                    //     }
+                    //     else{
+                    //         this.swr()
+                    //     }
 
-            }
+                    // }
+                    this.isLogging = false
+            },
     },
 
   mounted: function(){

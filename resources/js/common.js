@@ -39,7 +39,8 @@ export default{
         error (desc, title="Error") {
             this.$Notice.error({
                 title: title,
-                desc: desc
+                desc: desc,
+                duration: 5
             });
         },
         swr (desc, title="Hmmm Something is off") {

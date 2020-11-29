@@ -12,51 +12,21 @@ import Category from './components/Category.vue';
 import AboutUs from './components/AboutUs.vue';
 import Role from './components/Role.vue';
 import UserProfile from './components/UserProfile.vue';
+import * as  auth from './auth_services';
 
 Vue.use(Router);
 
 const routes =[
 
     {
-        path: '/',
-        name: 'LandPage',
-        component: MainNav
+        path: '/login',
+        name: 'Login',
+        component: Login
     },
     {
         path: '/aboutus',
         name: 'AboutUs',
         component: AboutUs
-    },
-    {
-        path: '/userprofile',
-        name: 'UserProfile',
-        component: UserProfile
-    },
-    {
-        path: '/category',
-        name: 'Category',
-        component: Category
-    },
-    {
-        path: '/tagtable',
-        name: 'Tagtable',
-        component: TagTable
-    },
-    {
-        path: '/postdata',
-        name: 'PostData',
-        component: PostData
-    },
-    {
-        path: '/userstatus',
-        name: 'UserStatus',
-        component: UserStatus
-    },
-
-    {
-        path: '/login',
-        name: 'Login',
-        component: Login
     },
 
     {
@@ -64,32 +34,67 @@ const routes =[
         name: 'Registration',
         component: Registration
     },
+    {
+        path: '/',
+        name: 'LandPage',
+        component: MainNav,
+    },
 
     {
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard,
-        beforeEnter: requireAuth,
+        children:
+        [
+
+
+            {
+                path: '/userprofile',
+                name: 'UserProfile',
+                component: UserProfile
+            },
+            {
+                path: '/category',
+                name: 'Category',
+                component: Category
+            },
+            {
+                path: '/tagtable',
+                name: 'Tagtable',
+                component: TagTable
+            },
+            {
+                path: '/postdata',
+                name: 'PostData',
+                component: PostData
+            },
+            {
+                path: '/userstatus',
+                name: 'UserStatus',
+                component: UserStatus
+            },
+            {
+                path: '/admin',
+                name: 'Admin',
+                component: Admin,
+            },
+
+            {
+                path: '/role',
+                name: 'Role',
+                component: Role
+            },
+
+        ],
+        beforeEnter: (to, from, next) => {
+            if(!auth.isloggedIn()){
+                next('/login');
+            }else{
+                next('/dashboard')
+            }
+        }
     },
 
-    {
-        path: '/admin',
-        name: 'Admin',
-        component: Admin,
-        beforeEnter: requireAuth,
-
-    },
-
-    // {
-    //     path: '/forgot',
-    //     name: 'Forgot',
-    //     component: Forgot
-    // },
-    {
-        path: '/role',
-        name: 'Role',
-        component: Role
-    },
 ]
 
 const router = new Router({

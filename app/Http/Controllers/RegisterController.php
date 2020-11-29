@@ -9,9 +9,9 @@ class RegisterController extends Controller
 {
     public function register(Request $request){
         $request->validate([
-            'name'=> 'required|string|max:255',
-            'email'=> 'required|string|email|unique:users',
-            'password'=> 'required|string',
+            'name'=>  ['required', 'string', 'max:255'],
+            'email'=> ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'=> ['required', 'string', 'min:8'],
         ]);
 
         $user = new User();
@@ -22,8 +22,8 @@ class RegisterController extends Controller
          if($user->save()){
              return response()->json([
                  'message' => 'User created successfully',
-                 'status_code' => 201
-             ], 201);
+                 'status_code' => 200
+             ], 200);
          }else{
             return response()->json([
                 'message' => 'An Error occurred, Please try again',
