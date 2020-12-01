@@ -41,7 +41,7 @@
                     <button>SENARIO</button>
                 </div>
                 <div class="lang account">
-                    <button>POST</button>
+                    <button  @click="addpostmodal = true">POST</button>
                 </div>
             </nav>
 
@@ -54,7 +54,7 @@
                         <h3>Senario Area</h3>
                     </div>
                     <div class="senario-area">
-                        <div class="post-card">
+                        <div class="post-card" v-for="(post, i) in posts" :key="i" v-if="posts.length">
                             <div class="user-img">
                                 <img
                                     src="../../assets/8.png"
@@ -62,9 +62,6 @@
                                 />
                             </div>
                             <div class="fab">
-                                <!-- <button>
-                                <Icon type="md-more" size="22"/>
-                              </button> -->
                                 <Dropdown
                                     trigger="click"
                                     style="margin-left: 20px"
@@ -72,15 +69,20 @@
                                     <a href="javascript:void(0)">
                                         <Icon type="md-more" size="22" />
                                     </a>
-                                    <DropdownMenu slot="list">
+                                    <DropdownMenu slot="list" >
                                         <DropdownItem
-                                            ><Icon type="md-create" />
-                                            Edit</DropdownItem
-                                        >
+                                            ><button  @click="showEditModal(post, i)">
+                                                  <Icon type="md-create" />
+                                                   Edit
+                                            </button>
+                                        </DropdownItem>
                                         <DropdownItem style="color: #ed4014"
-                                            ><Icon type="ios-trash" />
-                                            Delete</DropdownItem
-                                        >
+                                            >
+                                            <button @click="showDeleteModal(post, i)">
+                                                  <Icon type="ios-trash"/>
+                                                 Delete
+                                            </button>
+                                        </DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
@@ -89,22 +91,14 @@
                                 <h5>10h</h5>
                             </div>
                             <div class="post-title">
-                                <h4>Design a hand cart</h4>
+                                <h4>{{post.title}}</h4>
                             </div>
-                            <hr />
+                            <div class="feature-image">
+                                 <img :src="post.postImage"/>
+                            </div>
                             <div class="post-description">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip
-                                    ex ea commodo consequat. Duis aute irure
-                                    dolor in reprehenderit in voluptate velit
-                                    esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non
-                                    proident, sunt in culpa qui officia deserunt
-                                    mollit anim id est laborum.
+                                   {{post.post_description}}
                                 </p>
                             </div>
                             <hr/>
@@ -178,40 +172,89 @@
             </div>
         </div>
         <Modal
-            v-model="addtagmodal"
-            title="Add New Tag"
+            v-model="addpostmodal"
+            title="Add New Post"
             :mask-closable="false"
             :closable="false"
         >
-            <Input v-model="data.tagName" placeholder="Enter Tag Name" />
+            <form>
+                  <Input v-model="data.title" placeholder="Enter Post Title" />
+                  <label>Feature Image</label>
+                    <Upload
+                    ref="uploads"
+                    multiple
+                    type="drag"
+                    :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
+                    :on-success="handleSuccess"
+                    :on-error="handleError"
+                    :max-size="2048"
+                    :on-exceeded-size="handleMaxSize"
+                    :on-format-error="handleFormatError"
+                    :format="['jpg','jpeg','png']"
+                    action="app/user_upload">
+                    <div style="padding: 20px 0">
+                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                        <p>Click or drag files here to upload</p>
+                    </div>
+                </Upload>
+
+            <div class="image" v-if="data.postImage">
+                <img  :src ="`${data.postImage}`" />
+                <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
+            </div>
+                  <Input v-model="data.post_description" placeholder="Enter Post Description" />
+            </form>
             <div slot="footer">
-                <button @click="addtagmodal = false">Close</button>
+                <button @click="addpostmodal = false">Cancel</button>
                 <button
                     class="add-btn"
-                    @click="addTag"
+                    @click="add"
                     :disabled="isAdding"
                     :loading="isAdding"
                 >
-                    {{ isAdding ? "Adding..." : "Add Tag" }}
+                    {{ isAdding ? "Adding..." : "Add Post" }}
                 </button>
             </div>
         </Modal>
         <!-- EditModal -->
         <Modal
             v-model="editModal"
-            title="Edit Tag"
+            title="Edit Post"
             :mask-closable="false"
             :closable="false"
         >
-            <Input v-model="editData.tagName" placeholder="Edit Tag Name" />
+            <Input v-model="editData.title" placeholder="Edit Post Title" />
+                    <Upload v-show="isIconImageNew"
+                    ref="editDatauploads"
+                    multiple
+                    type="drag"
+                    :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
+                    :on-success="handleSuccess"
+                    :on-error="handleError"
+                    :max-size="2048"
+                    :on-exceeded-size="handleMaxSize"
+                    :on-format-error="handleFormatError"
+                    :format="['jpg','jpeg','png']"
+                    action="app/user_upload">
+                    <div style="padding: 20px 0">
+                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                        <p>Click or drag files here to upload</p>
+                    </div>
+                </Upload>
+
+            <div class="image" v-if="editData.postImage">
+                <img  :src ="`${editData.postImage}`" />
+                <Icon type="ios-trash-outline" @click="deleteImage(false)"></Icon>
+            </div>
+             <Input v-model="editData.post_description" placeholder="Enter Post Description" />
             <div slot="footer">
                 <button @click="editModal = false">Close</button>
                 <button
-                    @click="editTag"
+                    @click="edit"
                     :disabled="isAdding"
                     :loading="isAdding"
                 >
-                    {{ isAdding ? "Adding..." : "Add Tag" }}
+                    {{ isAdding ? "Adding..." : "Update Post" }}
                 </button>
             </div>
         </Modal>
@@ -233,7 +276,7 @@
                     long
                     :loading="isDeleting"
                     :disabled="isDeleting"
-                    @click="deleteTag"
+                    @click="deletePost"
                     >Delete</Button
                 >
                 <Button type="default" size="large" long @click="closeModal"
@@ -256,20 +299,26 @@ export default {
             isLogging: true,
 
             data: {
-                roleName: ""
+                title: '',
+                postImage: '',
+                post_description: '',
             },
-            addrolemodal: false,
+            addpostmodal: false,
             editModal: false,
             isAdding: false,
-            roles: [],
+            posts: [],
             editData: {
-                roleName: ""
+                title: '',
+                post_description: '',
             },
             index: -1,
             DeleteModal: false,
             isDeleting: false,
             deleteItem: {},
-            deletingIndex: -1
+            deletingIndex: -1,
+            token: '',
+            isIconImageNew: false,
+            isEditingItem: false,
         };
     },
 
@@ -287,23 +336,33 @@ export default {
         },
 
         async add() {
-            if (this.data.roleName.trim() == "")
-                return this.error("Role name is required");
+            if (this.data.title.trim() == "") return this.error("post title is required");
+            if(this.data.postImage.trim()=='') return this.error('postImage is required');
+            if (this.data.post_description.trim() == "") return this.error("post description is required");
+
             const res = await this.callApi(
                 "post",
-                "app/create_role",
+                "app/create_post",
                 this.data
             );
             if (res.status === 201) {
-                this.roles.unshift(res.data);
-                this.success("Role has been added successfully!");
-                this.addrolemodal = false;
-                this.data.roleName = "";
+                this.posts.unshift(res.data);
+                this.success("post has been added successfully!");
+                this.addpostmodal = false;
+                this.data.title = '';
+                this.data.postImage = '';
+                this.data.post_description = '';
             } else {
                 if (res.status == 422) {
-                    if (res.data.errors.roleName) {
-                        this.error(res.data.errors.roleName[0]);
+                    if (res.data.errors.title) {
+                        this.error(res.data.errors.title[0]);
                     }
+                    if(res.data.errors.postImage){
+						this.error(res.data.errors.postImage[0])
+                    }
+                    if(res.data.errors.post_description){
+						this.error(res.data.errors.post_description[0])
+					}
                 } else {
                     this.swr();
                 }
@@ -311,46 +370,56 @@ export default {
         },
 
         async edit() {
-            if (this.editData.roleName.trim() == "")
-                return this.error("Role name is required");
+            if (this.editData.title.trim() == "") return this.error("post name is required");
+            if(this.editData.postImage.trim()=='') return this.error('postImage name is required');
+            if(this.editData.post_description.trim()=='') return this.error('post_description name is required');
+
             const res = await this.callApi(
                 "post",
-                "app/edit_role",
+                "app/edit_post",
                 this.editData
             );
             if (res.status === 200) {
-                this.roles[this.index].roleName = this.editData.roleName;
-                this.success("Role has been edited successfully!");
+                this.posts[this.index].title = this.editData.title;
+                 this.posts[this.index].post_description = this.editData.post_description;
+                this.success("post has been edited successfully!");
                 this.editModal = false;
             } else {
                 if (res.status == 422) {
-                    if (res.data.errors.roleName) {
-                        this.error(res.data.errors.roleName[0]);
+                    if (res.data.errors.title) {
+                        this.error(res.data.errors.title[0]);
                     }
+                     if(res.data.errors.postImage){
+						this.error(res.data.errors.postImage[0])
+                    }
+                    if(res.data.errors.post_description){
+						this.error(res.data.errors.post_description[0])
+					}
                 } else {
                     this.swr();
                 }
             }
         },
-        showEditModal(role, index) {
-            let obj = {
-                id: role.id,
-                roleName: role.roleName
-            };
-            this.editData = obj;
+        showEditModal(post, index) {
+            // let obj = {
+            //     id: post.id,
+            //     title: post.title,
+            //     post_description: post_description,
+            // };
+            this.editData = post;
             this.editModal = true;
             this.index = index;
         },
 
-        async deleteRole(role, i) {
+        async deletePost(post, i) {
             const res = await this.callApi(
                 "post",
-                "app/delete_role",
+                "app/delete_post",
                 this.deleteItem
             );
             if (res.status === 200) {
-                this.roles.splice(this.deletingIndex, 1);
-                this.success("Role deleted successfully");
+                this.posts.splice(this.deletingIndex, 1);
+                this.success("post deleted successfully");
             } else {
                 this.swr();
             }
@@ -358,14 +427,14 @@ export default {
             this.DeleteModal = false;
         },
 
-        // loadroles: function(){
+        // loadposts: function(){
         //     // load API
         //     //assign this categories
         //     // catch errors
 
-        //     axios.get('/roles')
+        //     axios.get('/posts')
         //     .then((response)=>{
-        //         this.roles = response.data.data;
+        //         this.posts = response.data.data;
         //     })
         //     .catch(function (error){
         //         console.log(error);
@@ -378,9 +447,59 @@ export default {
             this.DeleteModal = true;
         },
 
+          handleSuccess (res, file) {
+                res = `/Userpost/${res}`
+                if(this.isEditingItem){return this.editData.postImage = res}
+                this.data.postImage = res
+            },
+
+            handleError (res, file) {
+                 console.log('res',res)
+                  console.log('res',file)
+                 this.$Notice.warning({
+                    title: 'The file format is incorrect',
+                    desc: `${file.errors.file.length ? file.errors.file[0] : 'Something went wrong'} `
+                });
+            },
+
+            handleFormatError (file) {
+                this.$Notice.warning({
+                    title: 'The file format is incorrect',
+                    desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+                });
+            },
+            handleMaxSize (file) {
+                this.$Notice.warning({
+                    title: 'Exceeding file size limit',
+                    desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+                });
+            },
+
+            async deleteImage(isAdd=true){
+                let image
+               if(!isAdd){
+                   this.isIconImageNew = true
+                   image =this.editData.PostImage
+                   this.editData.PostImage = ''
+                   this.$refs.editDatauploads.clearFiles()
+               }
+               else{
+                    image =this.data.postImage
+                    this.data.postImage = ''
+                    this.$refs.uploads.clearFiles()
+               }
+
+               const res = await this.callApi('post', 'app/user_delete_image', {imageName: image})
+               if(res.status!=200){
+                   this.data.iconImage = postImage
+                   this.swr()
+               }
+            },
+
+
         closeModal() {
             this.DeleteModal = false;
-        }
+        },
     },
 
     mounted() {
@@ -513,9 +632,10 @@ export default {
     },
 
     async created() {
+         this.token = window.Laravel.csrfToken
         const res = await this.callApi("get", "app/get_posts");
         if (res.status == 200) {
-            this.roles = res.data;
+            this.posts = res.data;
         } else {
             this.something();
         }
@@ -524,6 +644,20 @@ export default {
 </script>
 
 <style scoped>
+
+.feature-image{
+   justify-content: center;
+   align-content: center;
+   text-align: center;
+}
+
+.feature-image img{
+    width: 100%;
+    border-radius: 20px;
+    max-width: 350px;
+}
+
+
 
 .social{
     margin:4px;
@@ -779,6 +913,18 @@ export default {
     color: #ec6110;
     animation: hue-rotate 10s linear infinite;
 }
+
+.add-btn {
+    background-color: #2d8cf0;
+    margin-bottom: 10px;
+    padding: 12px 28px;
+    font-size: 11px;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1),
+        0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+}
+
 
 /* Menu
 =========================== */

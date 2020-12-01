@@ -47,7 +47,6 @@ const routes =[
         children:
         [
 
-
             {
                 path: '/userprofile',
                 name: 'UserProfile',
@@ -86,13 +85,13 @@ const routes =[
             },
 
         ],
-        beforeEnter: (to, from, next) => {
-            if(!auth.isloggedIn()){
-                next('/login');
-            }else{
-                next('/dashboard')
-            }
-        }
+        // beforeEnter(to, from, next){
+        //     if(!auth.isLoggedIn()){
+        //         next('/login');
+        //     }else{
+        //         next();
+        //     }
+        // }
     },
 
 ]
@@ -102,16 +101,5 @@ const router = new Router({
     mode:'history',
     linkActiveClass: 'active'
 });
-
-function requireAuth (to, from, next) {
-    let AuthCheck = window.AuthCheck;
-    if (AuthCheck === "0") {
-        next({
-            path: '/login',
-        })
-    } else {
-        next()
-    }
-}
 
 export default router;

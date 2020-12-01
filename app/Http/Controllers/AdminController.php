@@ -17,21 +17,21 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 
-        if (!Auth::check() && $request->path() != 'login') {
-            return redirect('/login');
-        }
+        // if (!Auth::check() && $request->path() != 'login') {
+        //     return redirect('/login');
+        // }
 
-        if (!Auth::check() && $request->path() == 'login') {
-            return view('welcome');
-        }
+        // if (!Auth::check() && $request->path() == 'login') {
+        //     return view('welcome');
+        // }
 
-        $user = Auth::user();
-        if ($user->role_id == 'User') {
-            return redirect('/dashboard');
-        }
-        if ($request->path() == 'login') {
-            return redirect('/admin');
-        }
+        // $user = Auth::user();
+        // if ($user->role_id == 'User') {
+        //     return redirect('/dashboard');
+        // }
+        // if ($request->path() == 'login') {
+        //     return redirect('/admin');
+        // }
          return view('welcome');
 
     }

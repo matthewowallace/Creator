@@ -14,7 +14,7 @@ class Posttags extends Migration
     public function up()
     {
         Schema::create('blogtags', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->integer('tag_id');
             $table->integer('blog_id');
             $table->timestamps();

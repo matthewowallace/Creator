@@ -4,6 +4,7 @@ use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -41,6 +42,15 @@ Route::group(['middleware'=>['protectedPage']],function(){
     Route::get('tags', [AdminController::class, 'AllTags']);
 
 });
+
+
+    Route::post('app/create_post', [UserController::class, 'addPost']);
+    Route::get('app/get_posts', [UserController::class, 'getPosts']);
+    Route::post('app/edit_post', [UserController::class, 'editPost']);
+    Route::post('app/delete_post', [UserController::class, 'deletePost']);
+    Route::post('app/user_upload', [UserController::class, 'upload']);
+    Route::post('app/user_delete_image', [UserController::class, 'deleteImage']);
+
 
 Route::middleware('auth:api')->get('/user',function (Request $request) {
     return $request->user();

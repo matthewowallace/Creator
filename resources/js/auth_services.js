@@ -5,20 +5,20 @@ export function register(user){
 }
 
 export function login(user){
-    return http().post('./auth/login',user)
-    .then(response =>{
-        if(response.status ===200){
-            localStorage.set('larave-vue-spa-token',JSON.stringify(response.data));
-            setToken(response.data)
+    return http().post('/auth/login',user)
+    .then(response => {
+        if(response.status === 200){
+            setToken(response.data);
         }
+        return response.data;
     });
 }
 
 function setToken(user){
-    localStorage.setItem('larave-vue-spa-token',JSON.stringify(data));
+    localStorage.setItem('larave-vue-spa-token', JSON.stringify(user));
 }
 
-export function isloggedIn(user){
+export function isLoggedIn(){
     const token = localStorage.getItem('larvae-vue-spa-token');
     return token != null;
 }

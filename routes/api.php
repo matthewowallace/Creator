@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/register', [RegisterController::class, 'register']);
     Route::post('/login', [LoginController::class, 'Login']);
-    Route::post('/logout', [LoginController::class, 'logout']);
+    Route::group(['middleware' => 'auth:api'], function(){
+        Route::post('/logout', [LoginController::class, 'logout']);
+    });
 });
 
 

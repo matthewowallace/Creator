@@ -14,8 +14,8 @@ class LoginController extends Controller
 
     public function Login(Request $request){
         $request->validate([
-            'email'=>['required','email'],
-            'password'=>['required']
+            'email'=>['required','email','string'],
+            'password'=>['required','string']
         ]);
 
         $user = new User();
@@ -25,14 +25,14 @@ class LoginController extends Controller
 
        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             return response()->json([
-                'message' => 'Invalid username/password',
+                'message' => 'Invalid username or password',
                 'status_code' => 401
             ],401);
        }
 
        $user = $request->user();
 
-       if($user->role_id == 'admin'){
+       if($user->userType == 'user'){
             $tokenData = $user->createToken('Personal Access Token', ['do_anything']);
        } else {
            $tokenData = $user->createToken('Personal Access Token', ['can_create']);
@@ -46,7 +46,7 @@ class LoginController extends Controller
             'access_token' => $tokenData->accessToken,
             'token_type' => 'Bearer',
             'token_scope' => $tokenData->token->scopes[0],
-            'expires_at' => Carbon::parse($tokenData->token->expires_at)->toDataTimeString(),
+            'expires_at' => Carbon::parse($tokenData->token->expires_at)->toDateTimeString(),
             'status_code' => 200,
            ], 200);
        }else{

@@ -13,15 +13,11 @@ class Posts extends Migration
      */
     public function up()
     {
-        Schema::create('blogs', function (Blueprint $table) {
-            $table->id();
+        Schema::create('posts', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('title');
-            $table->string('post');
-            $table->string('post_excerpt');
-            $table->string('slug')->unique();
-            $table->string('user_id');
-            $table->string('featureImage');
-            $table->string('metaDescription');
+            $table->string('postImage');
+            $table->string('post_description');
             $table->integer('views')->default(0);
             $table->timestamps();
         });
@@ -34,6 +30,6 @@ class Posts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('posts');
     }
 }

@@ -52,12 +52,12 @@
              })
          </script> --}}
 
-         {{-- <script>
+         <script>
               (function (){
                 window.Laravel = {
                     csrfToken: '{{ csrf_token() }}'
                 };
               })();
-         </script> --}}
+         </script>
      </body>
 </html>

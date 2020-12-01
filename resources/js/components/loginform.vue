@@ -1,7 +1,9 @@
 <template>
   <form class="form-1" @submit.prevent="login" action="/" method="post" novalidate="true">
-         <Input v-model="user.useremail"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" />
+         <Input v-model="user.email"  type="email" picture_src="person-circle-outline.svg" placeholder="Enter Email address" />
+         <div class="errors"  v-if="errors.email"><p>{{errors.email[0]}}</p></div>
          <PasswordInput v-model="user.password" placeholder="Enter your Password" :maxlength="30" />
+          <div class="errors" v-if="errors.password"><p>{{errors.password[0]}}</p></div>
         <div class="forgot">
              <a>Forgot Password ?</a>
         </div>
@@ -40,61 +42,35 @@ export default {
     data:()=> {
         return {
             user:{
-                password: "",
-                useremail: "",
+                password: '',
+                email: '',
             },
-
-            //  inputerror: {},
+             errors: {},
              isLogging: true,
         }
     },
 
-    mounted() {
-
-    },
-
-
     methods: {
 
         async login(){
-            //   this.inputerror = {};
-            //   if(!this.useremail.trim()) this.inputerror.useremail = "Email  is required";
-            //   if(!this.password.trim()) this.inputerror.password = "Password  is required";
-
-                // const res = await this.callApi('post', '/login', user)
-
-                // if(res.status===200){
-                //     this.success(res.data.msg);
-                //      localStorage.setItem('larave-vue-spa-token',JSON.stringify(res.data));
-                //     this.$router.push('/dashboard');
-                // }else{
-                //     if(res.status===401){
-                //         this.info(res.data.msg)
-                //     }else if(res.status===422){
-                //         for(let i in res.data.errors){
-                //             this.error(res.data.errors[i][0])
-                //         }
-                //     }
-                //     else{
-                //         this.swr()
-                //     }
-                //     this.isLogging = false
-                // }
-
                 try{
                     const response = await auth.login(this.user);
-                    this.errors = {};
                     this.$router.push('/dashboard');
+                    this.error = {};
                 } catch (error){
+                     console.log(''+error);
                   switch(error.response.status){
                       case 422:
                           this.error(error.response.data.message);
                           break;
                       case 401:
-                           this.info(error.response.data.message);
+                           this.info(error.response.data.message, "Unauthorized");
                            break;
                       case 500:
                            this.swr(error.response.data.message);
+                           break;
+                      default:
+                           this.info(error.response.data.message, "Something went wrong");
                            break;
 
                   }
@@ -113,6 +89,12 @@ export default {
 </script>
 
 <style scoped>
+
+    .errors p{
+        color:red;
+        font-size: 14px;
+        display: inline-block;
+    }
 
     .animation{
         position: absolute;
