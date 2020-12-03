@@ -38,10 +38,10 @@
                 </div>
 
                 <div class="lang account-2">
-                    <button>SENARIO</button>
+                    <button @click="addScenariomodal = true">Scenario</button>
                 </div>
                 <div class="lang account">
-                    <button  @click="addpostmodal = true">POST</button>
+                    <button @click="addpostmodal = true">POST</button>
                 </div>
             </nav>
 
@@ -51,10 +51,15 @@
                         <TopContributors />
                     </div>
                     <div class="profile--name">
-                        <h3>Senario Area</h3>
+                        <h3>Scenario Area</h3>
                     </div>
-                    <div class="senario-area">
-                        <div class="post-card" v-for="(post, i) in posts" :key="i" v-if="posts.length">
+                    <div class="Scenario-area">
+                        <div
+                            class="post-card"
+                            v-for="(post, i) in posts"
+                            :key="i"
+                            v-if="posts.length"
+                        >
                             <div class="user-img">
                                 <img
                                     src="../../assets/8.png"
@@ -69,47 +74,58 @@
                                     <a href="javascript:void(0)">
                                         <Icon type="md-more" size="22" />
                                     </a>
-                                    <DropdownMenu slot="list" >
+                                    <DropdownMenu slot="list">
                                         <DropdownItem
-                                            ><button  @click="showEditModal(post, i)">
-                                                  <Icon type="md-create" />
-                                                   Edit
+                                            ><button
+                                                @click="showEditModal(post, i)"
+                                            >
+                                                <Icon type="md-create" />
+                                                Edit
                                             </button>
                                         </DropdownItem>
-                                        <DropdownItem style="color: #ed4014"
+                                        <DropdownItem style="color: #ed4014">
+                                            <button
+                                                @click="
+                                                    showDeleteModal(post, i)
+                                                "
                                             >
-                                            <button @click="showDeleteModal(post, i)">
-                                                  <Icon type="ios-trash"/>
-                                                 Delete
+                                                <Icon type="ios-trash" />
+                                                Delete
                                             </button>
                                         </DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
+                            </div>
+                            <div class="feature-image">
+                                <img :src="post.postImage" />
                             </div>
                             <div class="user-info">
                                 <h5>John Brown</h5>
                                 <h5>10h</h5>
                             </div>
                             <div class="post-title">
-                                <h4>{{post.title}}</h4>
+                                <h4>{{ post.title }}</h4>
                             </div>
-                            <div class="feature-image">
-                                 <img :src="post.postImage"/>
-                            </div>
+
                             <div class="post-description">
                                 <p>
-                                   {{post.post_description}}
+                                    {{ post.post_description }}
                                 </p>
                             </div>
-                            <hr/>
+                            <hr />
                             <button class="social">
-                                 <Icon type="md-heart" size="22"/>
+                                <Icon type="md-heart" size="22" />
                             </button>
                             <button class="social">
-                                <Icon type="ios-chatbubbles" size="22"/>
+                                <Icon type="ios-chatbubbles" size="22" />
                             </button>
                         </div>
-                        <div class="senario-card">
+                        <div
+                            class="Scenario-card"
+                            v-for="(Scenario, i) in Scenarios"
+                            :key="i"
+                            v-if="Scenarios.length"
+                        >
                             <div class="user-img">
                                 <img
                                     src="../../assets/8.png"
@@ -129,48 +145,57 @@
                                     </a>
                                     <DropdownMenu slot="list">
                                         <DropdownItem
-                                            ><Icon type="md-create" />
-                                            Edit</DropdownItem
-                                        >
+                                            ><button
+                                                @click="
+                                                    showScenarioEditModal(
+                                                        Scenario,
+                                                        i
+                                                    )
+                                                "
+                                            >
+                                                <Icon type="md-create" />
+                                                Edit
+                                            </button>
+                                        </DropdownItem>
                                         <DropdownItem style="color: #ed4014"
-                                            ><Icon type="ios-trash" />
-                                            Delete</DropdownItem
-                                        >
+                                            ><button
+                                                @click="
+                                                    showScenarioDeleteModal(
+                                                        Scenario,
+                                                        i
+                                                    )
+                                                "
+                                            >
+                                                <Icon type="md-create" />
+                                                Delete
+                                            </button>
+                                        </DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
-                            <div class="senario-info">
+                            <div class="Scenario-info">
                                 <h5>John Brown</h5>
                                 <h5>10h</h5>
                             </div>
-                            <div class="senario-title">
-                                <h4>Design a hand cart</h4>
+                            <div class="Scenario-title">
+                                <h4>{{ Scenario.Scenario_title }}</h4>
                             </div>
                             <hr />
-                            <div class="senario-description">
+                            <div class="Scenario-description">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip
-                                    ex ea commodo consequat. Duis aute irure
-                                    dolor in reprehenderit in voluptate velit
-                                    esse cillum dolore eu fugiat nulla pariatur.
-                                    Excepteur sint occaecat cupidatat non
-                                    proident, sunt in culpa qui officia deserunt
-                                    mollit anim id est laborum.
+                                    {{ Scenario.Scenario_description }}
                                 </p>
                             </div>
                             <hr />
-                            <Icon type="md-heart" size="22"/>
-                            <Icon type="ios-chatbubbles" size="22"/>
+                            <Icon type="md-heart" size="22" />
+                            <Icon type="ios-chatbubbles" size="22" />
                         </div>
                     </div>
                 </div>
                 <div class="profile--img"></div>
             </div>
         </div>
+        <!-- AddModal -->
         <Modal
             v-model="addpostmodal"
             title="Add New Post"
@@ -178,31 +203,42 @@
             :closable="false"
         >
             <form>
-                  <Input v-model="data.title" placeholder="Enter Post Title" />
-                  <label>Feature Image</label>
-                    <Upload
+                <Input v-model="data.title" placeholder="Enter Post Title" />
+                <label>Feature Image</label>
+                <Upload
                     ref="uploads"
                     multiple
                     type="drag"
-                    :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
+                    :headers="{
+                        'x-csrf-token': token,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }"
                     :on-success="handleSuccess"
                     :on-error="handleError"
                     :max-size="2048"
                     :on-exceeded-size="handleMaxSize"
                     :on-format-error="handleFormatError"
-                    :format="['jpg','jpeg','png']"
-                    action="app/user_upload">
+                    :format="['jpg', 'jpeg', 'png']"
+                    action="app/user_upload"
+                >
                     <div style="padding: 20px 0">
-                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                        <Icon
+                            type="ios-cloud-upload"
+                            size="52"
+                            style="color: #3399ff"
+                        ></Icon>
                         <p>Click or drag files here to upload</p>
                     </div>
                 </Upload>
 
-            <div class="image" v-if="data.postImage">
-                <img  :src ="`${data.postImage}`" />
-                <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
-            </div>
-                  <Input v-model="data.post_description" placeholder="Enter Post Description" />
+                <div class="image" v-if="data.postImage">
+                    <img :src="`${data.postImage}`" />
+                    <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
+                </div>
+                <Input
+                    v-model="data.post_description"
+                    placeholder="Enter Post Description"
+                />
             </form>
             <div slot="footer">
                 <button @click="addpostmodal = false">Cancel</button>
@@ -224,42 +260,52 @@
             :closable="false"
         >
             <Input v-model="editData.title" placeholder="Edit Post Title" />
-                    <Upload v-show="isIconImageNew"
-                    ref="editDatauploads"
-                    multiple
-                    type="drag"
-                    :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
-                    :on-success="handleSuccess"
-                    :on-error="handleError"
-                    :max-size="2048"
-                    :on-exceeded-size="handleMaxSize"
-                    :on-format-error="handleFormatError"
-                    :format="['jpg','jpeg','png']"
-                    action="app/user_upload">
-                    <div style="padding: 20px 0">
-                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                        <p>Click or drag files here to upload</p>
-                    </div>
-                </Upload>
+            <Upload
+                v-show="isIconImageNew"
+                ref="editDatauploads"
+                multiple
+                type="drag"
+                :headers="{
+                    'x-csrf-token': token,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :max-size="2048"
+                :on-exceeded-size="handleMaxSize"
+                :on-format-error="handleFormatError"
+                :format="['jpg', 'jpeg', 'png']"
+                action="app/user_upload"
+            >
+                <div style="padding: 20px 0">
+                    <Icon
+                        type="ios-cloud-upload"
+                        size="52"
+                        style="color: #3399ff"
+                    ></Icon>
+                    <p>Click or drag files here to upload</p>
+                </div>
+            </Upload>
 
             <div class="image" v-if="editData.postImage">
-                <img  :src ="`${editData.postImage}`" />
-                <Icon type="ios-trash-outline" @click="deleteImage(false)"></Icon>
+                <img :src="`${editData.postImage}`" />
+                <Icon
+                    type="ios-trash-outline"
+                    @click="deleteImage(false)"
+                ></Icon>
             </div>
-             <Input v-model="editData.post_description" placeholder="Enter Post Description" />
+            <Input
+                v-model="editData.post_description"
+                placeholder="Enter Post Description"
+            />
             <div slot="footer">
                 <button @click="editModal = false">Close</button>
-                <button
-                    @click="edit"
-                    :disabled="isAdding"
-                    :loading="isAdding"
-                >
+                <button @click="edit" :disabled="isAdding" :loading="isAdding">
                     {{ isAdding ? "Adding..." : "Update Post" }}
                 </button>
             </div>
         </Modal>
         <!-- DeleteModal -->
-
         <Modal v-model="DeleteModal" width="360">
             <p slot="header" style="color: #f60; text-align: center">
                 <Icon type="ios-information-circle"></Icon>
@@ -284,6 +330,90 @@
                 >
             </div>
         </Modal>
+        <!-- AddScenarioModal -->
+        <Modal
+            v-model="addScenariomodal"
+            title="Add New Scenario"
+            :mask-closable="false"
+            :closable="false"
+        >
+            <form>
+                <Input
+                    v-model="data.Scenario_title"
+                    placeholder="Enter Scenario Title"
+                />
+                <Input
+                    v-model="data.Scenario_description"
+                    placeholder="Enter Scenario Description"
+                />
+            </form>
+            <div slot="footer">
+                <button @click="addScenariomodal = false">Cancel</button>
+                <button
+                    class="add-btn"
+                    @click="addScenario"
+                    :disabled="isAdding"
+                    :loading="isAdding"
+                >
+                    {{ isAdding ? "Adding..." : "Add Scenario" }}
+                </button>
+            </div>
+        </Modal>
+        <!-- EditScenarioModal -->
+        <Modal
+            v-model="editScenarioModal"
+            title="Scenario Post"
+            :mask-closable="false"
+            :closable="false"
+        >
+            <Input
+                v-model="editData.Scenario_title"
+                placeholder="Edit Scenario Title"
+            />
+            <Input
+                v-model="editData.Scenario_description"
+                placeholder="Enter Scenario Description"
+            />
+            <div slot="footer">
+                <button @click="editScenarioModal = false">Close</button>
+                <button
+                    @click="editScenario"
+                    :disabled="isAdding"
+                    :loading="isAdding"
+                >
+                    {{ isAdding ? "Adding..." : "Update Post" }}
+                </button>
+            </div>
+        </Modal>
+        <!-- DeleteScenarioModal -->
+        <Modal v-model="DeleteScenarioModal" width="360">
+            <p slot="header" style="color: #f60; text-align: center">
+                <Icon type="ios-information-circle"></Icon>
+                <span>Delete confirmation?</span>
+            </p>
+            <div style="text-align: center">
+                <p>Deleting removes data from database.</p>
+            </div>
+            <div slot="footer">
+                <Button
+                    class="red"
+                    type="default"
+                    size="large"
+                    long
+                    :loading="isDeleting"
+                    :disabled="isDeleting"
+                    @click="deleteScenario"
+                    >Delete</Button
+                >
+                <Button
+                    type="default"
+                    size="large"
+                    long
+                    @click="closeScenarioModal"
+                    >Close</Button
+                >
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -299,26 +429,34 @@ export default {
             isLogging: true,
 
             data: {
-                title: '',
-                postImage: '',
-                post_description: '',
+                title: "",
+                postImage: "",
+                post_description: "",
+                Scenario_title: "",
+                Scenario_description: ""
             },
             addpostmodal: false,
+            addScenariomodal: false,
             editModal: false,
+            editScenarioModal: false,
             isAdding: false,
             posts: [],
+            Scenarios: [],
             editData: {
-                title: '',
-                post_description: '',
+                title: "",
+                post_description: "",
+                Scenario_title: "",
+                Scenario_description: ""
             },
             index: -1,
+            DeleteScenarioModal: false,
             DeleteModal: false,
             isDeleting: false,
             deleteItem: {},
             deletingIndex: -1,
-            token: '',
+            token: "",
             isIconImageNew: false,
-            isEditingItem: false,
+            isEditingItem: false
         };
     },
 
@@ -336,9 +474,12 @@ export default {
         },
 
         async add() {
-            if (this.data.title.trim() == "") return this.error("post title is required");
-            if(this.data.postImage.trim()=='') return this.error('postImage is required');
-            if (this.data.post_description.trim() == "") return this.error("post description is required");
+            if (this.data.title.trim() == "")
+                return this.error("post title is required");
+            if (this.data.postImage.trim() == "")
+                return this.error("postImage is required");
+            if (this.data.post_description.trim() == "")
+                return this.error("post description is required");
 
             const res = await this.callApi(
                 "post",
@@ -357,12 +498,12 @@ export default {
                     if (res.data.errors.title) {
                         this.error(res.data.errors.title[0]);
                     }
-                    if(res.data.errors.postImage){
-						this.error(res.data.errors.postImage[0])
+                    if (res.data.errors.postImage) {
+                        this.error(res.data.errors.postImage[0]);
                     }
-                    if(res.data.errors.post_description){
-						this.error(res.data.errors.post_description[0])
-					}
+                    if (res.data.errors.post_description) {
+                        this.error(res.data.errors.post_description[0]);
+                    }
                 } else {
                     this.swr();
                 }
@@ -370,9 +511,12 @@ export default {
         },
 
         async edit() {
-            if (this.editData.title.trim() == "") return this.error("post name is required");
-            if(this.editData.postImage.trim()=='') return this.error('postImage name is required');
-            if(this.editData.post_description.trim()=='') return this.error('post_description name is required');
+            if (this.editData.title.trim() == "")
+                return this.error("post name is required");
+            if (this.editData.postImage.trim() == "")
+                return this.error("postImage name is required");
+            if (this.editData.post_description.trim() == "")
+                return this.error("post_description name is required");
 
             const res = await this.callApi(
                 "post",
@@ -381,7 +525,9 @@ export default {
             );
             if (res.status === 200) {
                 this.posts[this.index].title = this.editData.title;
-                 this.posts[this.index].post_description = this.editData.post_description;
+                this.posts[
+                    this.index
+                ].post_description = this.editData.post_description;
                 this.success("post has been edited successfully!");
                 this.editModal = false;
             } else {
@@ -389,12 +535,12 @@ export default {
                     if (res.data.errors.title) {
                         this.error(res.data.errors.title[0]);
                     }
-                     if(res.data.errors.postImage){
-						this.error(res.data.errors.postImage[0])
+                    if (res.data.errors.postImage) {
+                        this.error(res.data.errors.postImage[0]);
                     }
-                    if(res.data.errors.post_description){
-						this.error(res.data.errors.post_description[0])
-					}
+                    if (res.data.errors.post_description) {
+                        this.error(res.data.errors.post_description[0]);
+                    }
                 } else {
                     this.swr();
                 }
@@ -427,79 +573,170 @@ export default {
             this.DeleteModal = false;
         },
 
-        // loadposts: function(){
-        //     // load API
-        //     //assign this categories
-        //     // catch errors
-
-        //     axios.get('/posts')
-        //     .then((response)=>{
-        //         this.posts = response.data.data;
-        //     })
-        //     .catch(function (error){
-        //         console.log(error);
-        //     });
-        // },
-
         showDeleteModal(post, i) {
             this.deleteItem = post;
             this.deletingIndex = i;
             this.DeleteModal = true;
         },
 
-          handleSuccess (res, file) {
-                res = `/Userpost/${res}`
-                if(this.isEditingItem){return this.editData.postImage = res}
-                this.data.postImage = res
-            },
+        async addScenario() {
+            if (this.data.Scenario_title.trim() == "")
+                return this.error("Scenario title is required");
+            if (this.data.Scenario_description.trim() == "")
+                return this.error("Scenario description is required");
 
-            handleError (res, file) {
-                 console.log('res',res)
-                  console.log('res',file)
-                 this.$Notice.warning({
-                    title: 'The file format is incorrect',
-                    desc: `${file.errors.file.length ? file.errors.file[0] : 'Something went wrong'} `
-                });
-            },
+            const res = await this.callApi(
+                "post",
+                "app/create_Scenario",
+                this.data
+            );
+            if (res.status === 201) {
+                this.Scenarios.unshift(res.data);
+                this.success("Scenario has been added successfully!");
+                this.addScenariomodal = false;
+                this.data.Scenario_title = "";
+                this.data.Scenario_description = "";
+            } else {
+                if (res.status == 422) {
+                    if (res.data.errors.Scenario_title) {
+                        this.error(res.data.errors.Scenario_title[0]);
+                    }
+                    if (res.data.errors.Scenario_description) {
+                        this.error(res.data.errors.Scenario_description[0]);
+                    }
+                } else {
+                    this.swr();
+                }
+            }
+        },
 
-            handleFormatError (file) {
-                this.$Notice.warning({
-                    title: 'The file format is incorrect',
-                    desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-                });
-            },
-            handleMaxSize (file) {
-                this.$Notice.warning({
-                    title: 'Exceeding file size limit',
-                    desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-                });
-            },
+        async editScenario() {
+            if (this.editData.Scenario_title.trim() == "")
+                return this.error("Scenario name is required");
+            if (this.editData.Scenario_description.trim() == "")
+                return this.error("Scenario_description name is required");
 
-            async deleteImage(isAdd=true){
-                let image
-               if(!isAdd){
-                   this.isIconImageNew = true
-                   image =this.editData.PostImage
-                   this.editData.PostImage = ''
-                   this.$refs.editDatauploads.clearFiles()
-               }
-               else{
-                    image =this.data.postImage
-                    this.data.postImage = ''
-                    this.$refs.uploads.clearFiles()
-               }
+            const res = await this.callApi(
+                "post",
+                "app/edit_Scenario",
+                this.editData
+            );
+            if (res.status === 200) {
+                this.Scenarios[
+                    this.index
+                ].Scenario_title = this.editData.Scenario_title;
+                this.Scenarios[
+                    this.index
+                ].Scenario_description = this.editData.Scenario_description;
+                this.success("Scenario has been edited successfully!");
+                this.editScenarioModal = false;
+            } else {
+                if (res.status == 422) {
+                    if (res.data.errors.Scenario_title) {
+                        this.error(res.data.errors.Scenario_title[0]);
+                    }
+                    if (res.data.errors.Scenario_description) {
+                        this.error(res.data.errors.Scenario_description[0]);
+                    }
+                } else {
+                    this.swr();
+                }
+            }
+        },
+        showScenarioEditModal(Scenario, index) {
+            this.editData = Scenario;
+            this.editScenarioModal = true;
+            this.index = index;
+        },
 
-               const res = await this.callApi('post', 'app/user_delete_image', {imageName: image})
-               if(res.status!=200){
-                   this.data.iconImage = postImage
-                   this.swr()
-               }
-            },
+        async deleteScenario(Scenario, i) {
+            const res = await this.callApi(
+                "post",
+                "app/delete_Scenario",
+                this.deleteItem
+            );
+            if (res.status === 200) {
+                this.Scenarios.splice(this.deletingIndex, 1);
+                this.success("Scenario deleted successfully");
+            } else {
+                this.swr();
+            }
+            this.isDeleting = false;
+            this.DeleteScenarioModal = false;
+        },
 
+        showScenarioDeleteModal(Scenario, i) {
+            this.deleteItem = Scenario;
+            this.deletingIndex = i;
+            this.DeleteScenarioModal = true;
+        },
+
+        handleSuccess(res, file) {
+            res = `/Userpost/${res}`;
+            if (this.isEditingItem) {
+                return (this.editData.postImage = res);
+            }
+            this.data.postImage = res;
+        },
+
+        handleError(res, file) {
+            console.log("res", res);
+            console.log("res", file);
+            this.$Notice.warning({
+                title: "The file format is incorrect",
+                desc: `${
+                    file.errors.file.length
+                        ? file.errors.file[0]
+                        : "Something went wrong"
+                } `
+            });
+        },
+
+        handleFormatError(file) {
+            this.$Notice.warning({
+                title: "The file format is incorrect",
+                desc:
+                    "File format of " +
+                    file.name +
+                    " is incorrect, please select jpg or png."
+            });
+        },
+        handleMaxSize(file) {
+            this.$Notice.warning({
+                title: "Exceeding file size limit",
+                desc: "File  " + file.name + " is too large, no more than 2M."
+            });
+        },
+
+        async deleteImage(isAdd = true) {
+            let image;
+            if (!isAdd) {
+                this.isIconImageNew = true;
+                image = this.editData.postImage;
+                this.editData.postImage = '';
+                this.$refs.editDatauploads.clearFiles();
+            } else {
+                image = this.data.postImage;
+                this.data.postImage = '';
+                this.$refs.uploads.clearFiles();
+            }
+
+            const res = await this.callApi("post", "app/user_delete_image", {
+                imageName: image
+            });
+            if (res.status != 200) {
+                this.data.postImage = postImage;
+                this.swr();
+            }
+        },
 
         closeModal() {
             this.DeleteModal = false;
         },
+
+        closeScenarioModal() {
+            this.DeleteScenarioModal = false;
+        }
     },
 
     mounted() {
@@ -632,10 +869,20 @@ export default {
     },
 
     async created() {
-         this.token = window.Laravel.csrfToken
-        const res = await this.callApi("get", "app/get_posts");
+        this.token = window.Laravel.csrfToken;
+        const [res, resRole] = await Promise.all([
+            this.callApi("get", "app/get_posts"),
+            this.callApi("get", "app/get_Scenarios")
+        ]);
+
         if (res.status == 200) {
             this.posts = res.data;
+        } else {
+            this.something();
+        }
+
+        if (resRole.status == 200) {
+            this.Scenarios = resRole.data;
         } else {
             this.something();
         }
@@ -644,23 +891,28 @@ export default {
 </script>
 
 <style scoped>
-
-.feature-image{
-   justify-content: center;
-   align-content: center;
-   text-align: center;
-}
-
-.feature-image img{
+.feature-image {
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    height: 250px;
     width: 100%;
-    border-radius: 20px;
-    max-width: 350px;
+    overflow: hidden;
+    margin-bottom: 10px;
 }
 
+.feature-image img {
+    width: 100%;
+    transition: 2s;
+}
 
+/* .feature-image img:hover {
+    filter: grayscale(30%);
+    transform: scale(1.1);
+} */
 
-.social{
-    margin:4px;
+.social {
+    margin: 4px;
     margin-top: 8px;
     color: #b8b8b8;
 }
@@ -670,21 +922,27 @@ export default {
     z-index: -90;
 }
 
+.user-info {
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
 .user-info h5 {
     margin-left: 10px;
     font-size: 12px;
     color: #3451a0;
+    display: inline-block;
 }
 .user-info h5:first-child {
     font-weight: bold;
 }
 
-.senario-info h5 {
+.Scenario-info h5 {
     margin-left: 10px;
     font-size: 12px;
     color: #fff;
 }
-.senario-info h5:first-child {
+.Scenario-info h5:first-child {
     font-weight: bold;
 }
 
@@ -709,7 +967,7 @@ export default {
     color: #303030;
 }
 
-.senario-card {
+.Scenario-card {
     margin: 10px;
     margin-left: 0px;
     padding: 30px;
@@ -724,20 +982,18 @@ export default {
     position: relative;
 }
 
-.senario-card:hover {
+.Scenario-card:hover {
     transform: translateY(-10px);
 }
 
 .post-card {
     margin: 10px;
     margin-left: 0px;
-    padding: 30px;
-    width: 30%;
+    width: 300px;
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1),
         0px 1px 3px 0px rgba(0, 0, 0, 0.08);
     transition: 0.9s;
-    border-top-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-radius: 10px;
     min-width: 300px;
     position: relative;
 }
@@ -754,12 +1010,12 @@ export default {
     margin-bottom: 40px;
 }
 
-.senario-title {
+.Scenario-title {
     margin-top: 15px;
     margin-bottom: 15px;
 }
 
-.senario-title h4 {
+.Scenario-title h4 {
     font-size: 24px;
     color: #fff;
     font-weight: bold;
@@ -768,22 +1024,27 @@ export default {
 
 .post-description p {
     padding: 10px;
-    font-size: 14px;
+    padding-top: 2px;
+    font-size: 12px;
     max-width: 30vw;
 }
 
 .post-title {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    padding-left: 17px;
 }
 
 .post-title h4 {
     font-family: "Poppins", sans-serif;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
 }
+.post-description {
+    padding-left: 10px;
+}
 
-.senario-description p {
+.Scenario-description p {
     padding: 10px;
     font-size: 14px;
     max-width: 30vw;
@@ -796,7 +1057,7 @@ export default {
     max-width: 80%;
 }
 
-.senario-area {
+.Scenario-area {
     padding: 10px;
     display: flex;
     justify-content: space-around;
@@ -924,7 +1185,6 @@ export default {
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1),
         0px 1px 3px 0px rgba(0, 0, 0, 0.08);
 }
-
 
 /* Menu
 =========================== */
@@ -1071,7 +1331,7 @@ a {
         max-width: 300px;
     }
 
-    .senario-description p {
+    .Scenario-description p {
         padding: 10px;
         font-size: 14px;
         max-width: 300px;
@@ -1088,13 +1348,17 @@ a {
             0px 1px 3px 0px rgba(0, 0, 0, 0.08);
     }
 
+    .user-info {
+        padding-top: 10px;
+    }
+
     .user-info h5 {
         margin-left: 40px;
         font-size: 12px;
         color: #3451a0;
     }
 
-    .senario-info h5 {
+    .Scenario-info h5 {
         margin-left: 40px;
         font-size: 12px;
         color: #fff;

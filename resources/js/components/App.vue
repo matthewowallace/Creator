@@ -330,6 +330,23 @@ body::-webkit-scrollbar-thumb {
         white-space: nowrap;
     }
 
+    .VueCarousel-slide {
+        flex-basis: auto !important;
+        flex-grow: 0;
+        flex-shrink: 0;
+        user-select: none;
+        backface-visibility: hidden;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        outline: none;
+    }
+
+    .VueCarousel-pagination[data-v-438fd353] {
+        width: 100%;
+        text-align: center;
+        display: none !important;
+    }
+
 
 
     /* Desktops and laptops ----------- */

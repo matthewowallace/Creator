@@ -47,6 +47,10 @@ Route::group(['middleware'=>['protectedPage']],function(){
     Route::post('app/create_post', [UserController::class, 'addPost']);
     Route::get('app/get_posts', [UserController::class, 'getPosts']);
     Route::post('app/edit_post', [UserController::class, 'editPost']);
+    Route::post('app/create_Scenario', [UserController::class, 'addScenario']);
+    Route::get('app/get_Scenarios', [UserController::class, 'getScenarios']);
+    Route::post('app/edit_Scenario', [UserController::class, 'editScenario']);
+    Route::post('app/delete_Scenario', [UserController::class, 'deleteScenario']);
     Route::post('app/delete_post', [UserController::class, 'deletePost']);
     Route::post('app/user_upload', [UserController::class, 'upload']);
     Route::post('app/user_delete_image', [UserController::class, 'deleteImage']);

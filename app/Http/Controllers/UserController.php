@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Scenario;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -46,6 +47,43 @@ class UserController extends Controller
 
     public function getPosts(){
          return Post::orderBy('id','asc')->get();
+    }
+
+    public function addScenario(Request $request){
+        //validate request
+           $this->validate($request, [
+                'Scenario_title' => 'required',
+                'Scenario_description' => 'required'
+            ]);
+            return Scenario::create([
+                'Scenario_title' => $request->Scenario_title,
+                'Scenario_description' => $request->Scenario_description
+
+            ]);
+    }
+
+    public function editScenario(Request $request){
+        //validate request
+        $this->validate($request, [
+            'Scenario_title' => 'required',
+            'Scenario_description' => 'required',
+        ]);
+        return Scenario::where('id', $request->id)->update([
+            'Scenario_title' => $request->Scenario_title,
+            'Scenario_description' => $request->Scenario_description,
+        ]);
+    }
+
+    public function deleteScenario(Request $request){
+        //validate request
+           $this->validate($request, [
+                'id' => 'required',
+            ]);
+            return Scenario::where('id', $request->id)->delete();
+    }
+
+    public function getScenarios(){
+         return Scenario::orderBy('id','asc')->get();
     }
 
 

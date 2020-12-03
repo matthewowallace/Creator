@@ -102,8 +102,8 @@
                                         <PostChart/>
                                     </div>
                                     <div class="status--1">
-                                        <h3>Senarios</h3>
-                                        <SenarioChart/>
+                                        <h3>Scenarios</h3>
+                                        <ScenarioChart/>
                                     </div>
                                 </div>
                                 <div  class="dash--section">
@@ -125,7 +125,7 @@
 import Userchart from '../components/Userchart'
 import AreaChart from '../components/Areachart'
 import PostChart from '../components/Postchart'
-import SenarioChart from '../components/Senariochart'
+import ScenarioChart from '../components/Scenariochart'
 import UserAccountTable from '../components/UserAccountTable'
 import PostActivityTable from '../components/PostActivityTable'
 import Tags from '../components/Tags'
@@ -138,7 +138,7 @@ export default {
         Userchart,
         AreaChart,
         PostChart,
-        SenarioChart,
+        ScenarioChart,
         UserAccountTable,
         PostActivityTable,
         Tags,
