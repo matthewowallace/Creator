@@ -21,7 +21,14 @@ const routes =[
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: Login,
+        beforeEnter(to, from, next){
+            if(!auth.isLoggedIn()){
+                next();
+            }else{
+                next('/dashboard');
+            }
+        }
     },
     {
         path: '/aboutus',
@@ -44,54 +51,48 @@ const routes =[
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard,
-        children:
-        [
-
-            {
-                path: '/userprofile',
-                name: 'UserProfile',
-                component: UserProfile
-            },
-            {
-                path: '/category',
-                name: 'Category',
-                component: Category
-            },
-            {
-                path: '/tagtable',
-                name: 'Tagtable',
-                component: TagTable
-            },
-            {
-                path: '/postdata',
-                name: 'PostData',
-                component: PostData
-            },
-            {
-                path: '/userstatus',
-                name: 'UserStatus',
-                component: UserStatus
-            },
-            {
-                path: '/admin',
-                name: 'Admin',
-                component: Admin,
-            },
-
-            {
-                path: '/role',
-                name: 'Role',
-                component: Role
-            },
-
-        ],
-        // beforeEnter(to, from, next){
-        //     if(!auth.isLoggedIn()){
-        //         next('/login');
-        //     }else{
-        //         next();
-        //     }
-        // }
+        beforeEnter(to, from, next){
+            if(!auth.isLoggedIn()){
+                next('/login');
+            }else{
+                next();
+            }
+        }
+    },
+    {
+        path: '/userprofile',
+        name: 'UserProfile',
+        component: () => import('./components/UserProfile.vue'),
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: Admin,
+    },
+    {
+        path: '/category',
+        name: 'Category',
+        component: Category
+    },
+    {
+        path: '/tagtable',
+        name: 'Tagtable',
+        component: TagTable
+    },
+    {
+        path: '/postdata',
+        name: 'PostData',
+        component: PostData
+    },
+    {
+        path: '/userstatus',
+        name: 'UserStatus',
+        component: UserStatus
+    },
+    {
+        path: '/role',
+        name: 'Role',
+        component: Role
     },
 
 ]

@@ -35,8 +35,8 @@ class AuthServiceProvider extends ServiceProvider
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
 
         Passport::tokensCan([
-            'do_anything' => 'Administrator',
-            'can_create' => 'User',
+            'admin' => 'Administrator',
+            'user' => 'User',
         ]);
 
     }

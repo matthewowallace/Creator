@@ -1,4 +1,6 @@
 import {http, httpFile} from './http_service'
+import jwt from 'jsonwebtoken'
+import store from './store'
 
 export function register(user){
     return http().post('/auth/register', user);
@@ -15,10 +17,30 @@ export function login(user){
 }
 
 function setToken(user){
-    localStorage.setItem('larave-vue-spa-token', JSON.stringify(user));
+    const token = jwt.sign({user: user}, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    localStorage.setItem('larave-vue-spa-token', token);
+    store.dispatch('authenticate', user.user)
 }
 
 export function isLoggedIn(){
-    const token = localStorage.getItem('larvae-vue-spa-token');
+    const token = localStorage.getItem('larave-vue-spa-token');
     return token != null;
+}
+
+export function logout(){
+    http().get('/auth/logout');
+    localStorage.removeItem('larave-vue-spa-token');
+}
+
+export function getAccessToken(){
+    const token = localStorage.getItem('larave-vue-spa-token');
+    if(!token){
+        return null;
+    }
+    const tokenData = jwt.decode(token);
+    return tokenData.user.access_token;
+}
+
+export function getProfile(){
+    return http().get('/auth/profile');
 }

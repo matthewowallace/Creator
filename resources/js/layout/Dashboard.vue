@@ -1,5 +1,6 @@
 <template>
     <div>
+        <router-view></router-view>
         <!-- <div v-if="isLogging">
              <div class="overlay first">
                  <div class="admin-overlay">
@@ -424,7 +425,6 @@ import TopContributors from "../components/TopContributors";
 export default {
     data() {
         return {
-            user: null,
             visible: false,
             isLogging: true,
 

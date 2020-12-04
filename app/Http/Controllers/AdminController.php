@@ -36,6 +36,7 @@ class AdminController extends Controller
 
     }
 
+
     public function addTag(Request $request){
         //validate request
            $this->validate($request, [

@@ -1,5 +1,6 @@
 <template>
      <div class="About-us">
+         <router-view></router-view>
          <YouthNavbar />
         <div class="section-1">
         <div class="Title--1">

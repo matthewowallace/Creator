@@ -1,5 +1,6 @@
 <template>
          <div class="navbar">
+             <router-view></router-view>
             <Menu mode="horizontal" :theme="theme1" active-name="1">
                 <MenuItem name="1">
                 <router-link to="/" exact>
@@ -31,7 +32,7 @@
                         <MenuItem name="3-2">Account Settings</MenuItem>
                         </MenuGroup>
                         <MenuGroup title="Logout">
-                            <MenuItem name="3-4"><button @click="logout">Logout</button></MenuItem>
+                            <MenuItem name="3-4"><button v-on:click="logout">Logout</button></MenuItem>
                         </MenuGroup>
                     </Submenu>
                     <router-link to="/dashboard">
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+import * as auth from '../auth_services';
 import Axios from 'axios'
 export default {
     name: "UserProfileNavbar",
@@ -64,13 +66,9 @@ export default {
         },
     methods:{
 
-        logout(){
-            axios.post('/api/logout', {token : this.$store.state.token})
-            .then( res => {
-                this.$store.commit('cleartToken');
-                this.$router.push('/login');
-            })
-
+        logout: async function(){
+            auth.logout();
+             this.$router.push('/login');
         },
     }
 }

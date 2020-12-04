@@ -1,10 +1,11 @@
 <template>
  <div>
+     <router-view></router-view>
      <UserProfileNavbar />
      <div class="profile">
       <div class="profile--area">
          <div class="profile--name">
-            <h3>John Brown</h3>
+            <h3>{{$store.state.profile.name}}</h3>
          </div>
          <div class="description--title">
              <h4>The world is my runway</h4>

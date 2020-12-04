@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 
 /*
@@ -26,27 +27,33 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/register', [RegisterController::class, 'register']);
     Route::post('/login', [LoginController::class, 'Login']);
     Route::group(['middleware' => 'auth:api'], function(){
-        Route::post('/logout', [LoginController::class, 'logout']);
+    Route::get('/logout', [LoginController::class, 'logout']);
+    Route::get('profile', [UserController::class, 'profile']);
     });
 });
 
 
-Route::group(['prefix' => 'user'], function () {
-    Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
 
-           Route::post('/edit-post',function(){
-                return response()->json([
-                    'message' => 'Everyone access',
-                    'status_code' => 200
-                ], 200);
-           })->middleware('scope: can_create');
 
-           Route::post('/create-post',function(){
-            return response()->json([
-                'message' => 'Everyone access',
-                'status_code' => 200
-            ], 200);
-            })->middleware('scope: can_create');
+            Route::group(['middleware' => 'scope:user'], function(){
+                Route::get('/user-scope', function(){
+                    return response()->json([
+                        'message' => 'User can access this',
+                        'status_code' =>200
+                    ], 200);
+                });
+            });
+            Route::group(['middleware' => 'scope:admin'], function(){
+                Route::get('/admin-scope', function(){
+                    return response()->json([
+                        'message' => 'User can access this',
+                        'status_code' =>200
+                    ], 200);
+                });
+            });
 
-    });
+
+
+
 });

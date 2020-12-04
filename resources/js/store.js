@@ -1,12 +1,15 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import * as auth from './auth_services';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state : {
 
+        isLoggedIn: null,
         apiURL: 'http://localhost:8000/api',
         serverPath: 'http://localhost:8000',
+        profile:{},
 
         deleteModalObj : {
             showDeleteModal: false,
@@ -64,6 +67,15 @@ export default new Vuex.Store({
         clearToken(state){
             localStorage.removeItem('auth');
             state.token = '';
+        },
+
+        authenticate(state, payload){
+            state.isLoggedIn = auth.isLoggedIn();
+            if(state.isLoggedIn){
+                state.profile = payload;
+            }else{
+                state.profile ={};
+            }
         }
 
     },
@@ -71,7 +83,9 @@ export default new Vuex.Store({
 
 
     actions :{
-
+        authenticate(context, payload){
+            context.commit('authenticate', payload);
+        }
     }
 
 

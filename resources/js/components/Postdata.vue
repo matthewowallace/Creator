@@ -1,6 +1,6 @@
 <template>
       <div class="wrapper">
-
+            <router-view></router-view>
                 <!-- OVERLAY
             =============================== -->
             <div class="overlay first">

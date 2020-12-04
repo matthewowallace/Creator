@@ -1,5 +1,6 @@
 <template>
     <div class="tagtable">
+            <router-view></router-view>
           <button @click="addtagmodal=true" class="addtag-btn">Add Admin</button>
           <!-- <Table border :columns="tags" :data="tags"></Table> -->
           <!-- Tag adding modal   -->

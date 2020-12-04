@@ -26,6 +26,7 @@
     "dependencies": {
         "dr-vue-echarts": "^1.0.13",
         "gsap": "^3.5.1",
+        "jsonwebtoken": "^8.5.1",
         "view-design": "^4.4.0",
         "vue-carousel": "^0.18.0",
         "vue-router": "^3.4.9",

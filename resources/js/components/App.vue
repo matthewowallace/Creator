@@ -11,6 +11,7 @@
 <script>
 
 import MainNav from './MainNav';
+import * as auth from '../auth_services';
 export default {
 
       name: 'app',
@@ -28,9 +29,16 @@ export default {
          MainNav,
       },
 
-      mounted() {
-
-      },
+    beforeCreate: async function(){
+        try{
+            if(auth.isLoggedIn()){
+                const response = await auth.getProfile();
+                this.$store.dispatch('authenticate', response.data);
+            }
+        }catch(error){
+            auth.logout();
+        }
+    }
 
 }
 </script>

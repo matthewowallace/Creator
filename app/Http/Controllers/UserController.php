@@ -111,5 +111,15 @@ class UserController extends Controller
         return;
     }
 
+    public function profile(Request $request){
+        if($request->user()){
+            return response()->json($request->user(), 200,);
+        }
+        return response()->json([
+            'message' => 'Not loggin',
+            'status_code' => 500
+        ], 500);
+    }
+
 
 }
