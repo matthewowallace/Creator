@@ -8,31 +8,39 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function index(Request $request){
+    public function getComments(){
+        return Comment::orderBy('id','asc')->get();
+   }
 
-        $data = $request->validate([
-            'post_id' => 'required',
+
+
+   public function addComment(Request $request){
+    //validate request
+       $this->validate($request, [
+            'Comment_description' => 'required'
         ]);
-        $comments = Comment::where('video_id', $data['post_id'])
-        ->orderBy('id', 'desc')
-        ->get();
-        return response($comments, 200);
+        return Comment::create([
+            'Comment_description' => $request->Comment_description
 
+        ]);
+   }
+
+   public function editComment(Request $request){
+    //validate request
+    $this->validate($request, [
+        'Comment_description' => 'required',
+    ]);
+    return Comment::where('id', $request->id)->update([
+        'Comment_description' => $request->Comment_description,
+    ]);
+   }
+
+    public function deletePost(Request $request){
+        //validate request
+        $this->validate($request, [
+                'id' => 'required',
+            ]);
+            return Comment::where('id', $request->id)->delete();
     }
 
-    public function store(Request $request){
-        $data = $request->validate([
-            'body' =>'required|min:3',
-            'post_id' => 'required',
-        ]);
-
-        $comment = Comment::create([
-            'body' => $data['body'],
-            'user_id' => Auth::user()->id,
-            'is_published' => 1,
-            'post_id' => $data['post_id']
-        ]);
-
-        return response($comment, 201);
-    }
 }

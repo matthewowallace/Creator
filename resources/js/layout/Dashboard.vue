@@ -190,8 +190,14 @@
                             </div>
                             <hr />
                             <Icon type="md-heart" size="22" />
-                            <Icon type="ios-chatbubbles" size="22" />
-                            <CommentWrapper />
+                            <button>
+                                  <Icon  @click="addcommentmodal = true" type="ios-chatbubbles" size="22" />
+                            </button>
+                            <div>
+                                   <div v-for="comment in comments" v-bind:key="comment.id">
+                                    <Comment :comment="comment" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -419,6 +425,26 @@
                 >
             </div>
         </Modal>
+        <!-- Add comment -->
+         <Modal
+            v-model="addcommentmodal"
+            title="Add New Comment"
+            :mask-closable="false"
+            :closable="false"
+        >
+            <Input v-model="comment" placeholder="Enter Comment" />
+            <div slot="footer">
+                <button @click="addcommentmodal = false">Close</button>
+                <button
+                    class="add-btn"
+                    @click="addComment"
+                    :disabled="isAdding"
+                    :loading="isAdding"
+                >
+                    {{ isAdding ? "Adding..." : "Add Comment" }}
+                </button>
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -427,7 +453,7 @@ import Axios from "axios";
 import UserProfileNavbar from "../components/UserProfileNavbar";
 import TopContributors from "../components/TopContributors";
 import DashSidebar from "../components/DashSiderbar";
-import CommentWrapper from "../components/Comments/CommentWrapper";
+import Comment from "../components/Comments/Comment";
 export default {
     data() {
         return {
@@ -462,7 +488,10 @@ export default {
             deletingIndex: -1,
             token: "",
             isIconImageNew: false,
-            isEditingItem: false
+            isEditingItem: false,
+            addcommentmodal: false,
+            comment: '',
+            comments: [],
         };
     },
 
@@ -470,7 +499,7 @@ export default {
         UserProfileNavbar,
         TopContributors,
         DashSidebar,
-        CommentWrapper,
+        Comment,
     },
 
     methods: {
@@ -744,7 +773,35 @@ export default {
 
         closeScenarioModal() {
             this.DeleteScenarioModal = false;
+        },
+
+          async addComment(){
+
+            if (this.comment.trim() == "")
+            return this.error("Comment is required");
+
+            const data = {
+                Comment_description : this.comment,
+            }
+
+            const res = await this.callApi("post", "app/add_comment", data);
+            if (res.status === 201) {
+                this.comment.unshift(res.data);
+                this.success("Comment has been added successfully!");
+                this.addcommentmodal = false;
+                this.comment = "";
+            } else {
+                if (res.status == 422) {
+                    if (res.data.errors.comment) {
+                        this.error(res.data.errors.comment[0]);
+                    }
+                } else {
+                    this.swr();
+                }
+            }
         }
+
+
     },
 
     mounted() {
@@ -830,9 +887,10 @@ export default {
 
     async created() {
         this.token = window.Laravel.csrfToken;
-        const [res, resRole] = await Promise.all([
+        const [res, resRole, resComment] = await Promise.all([
             this.callApi("get", "app/get_posts"),
-            this.callApi("get", "app/get_Scenarios")
+            this.callApi("get", "app/get_Scenarios"),
+            this.callApi("get","app/get_comments"),
         ]);
 
         if (res.status == 200) {
@@ -843,6 +901,11 @@ export default {
 
         if (resRole.status == 200) {
             this.Scenarios = resRole.data;
+        } else {
+            this.something();
+        }
+        if (resComment.status == 200) {
+            this.comments = res.data;
         } else {
             this.something();
         }

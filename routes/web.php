@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CommentController;
 
 
 /*
@@ -55,6 +56,12 @@ use App\Http\Controllers\LoginController;
     Route::post('app/delete_post', [UserController::class, 'deletePost']);
     Route::post('app/user_upload', [UserController::class, 'upload']);
     Route::post('app/user_delete_image', [UserController::class, 'deleteImage']);
+
+    Route::post('app/delete_comment', [CommentController::class, 'deleteComment']);
+    Route::post('app/add_comment', [CommentController::class, 'addComment']);
+    Route::get('app/get_comments', [CommentController::class, 'getComments']);
+    Route::post('app/edit_comment', [CommentController::class, 'editComment']);
+
 
 
 
