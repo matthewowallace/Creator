@@ -14,66 +14,7 @@
 
           <div class="layout">
         <Layout>
-            <Header>
-                <Menu mode="horizontal">
-                    <div class="layout-logo">
-                         <div class="brand-logo">
-                        <h3 class="black">YOUTH</h3>
-                        <h3 class="orange">CREATOR.</h3>
-                        </div>
-                    </div>
-                    <div class="layout-nav">
-                         <MenuItem name="1">
-                            <router-link to="/userstatus" >
-                            <div>
-                                <router-link to="/admin" >
-                                    <div>
-                                        <Icon type="md-analytics"></Icon>
-                                        <a>Dashboard</a>
-                                    </div>
-                                </router-link>
-                            </div>
-                            </router-link>
-                        </MenuItem>
-                        <MenuItem name="2">
-                            <router-link to="/userstatus" >
-                            <div>
-                                <Icon type="ios-people"></Icon>
-                                <a>User Status</a>
-                            </div>
-                            </router-link>
-                        </MenuItem>
-                        <MenuItem name="3">
-                            <router-link to="/postdata" >
-                                <div>
-                                <Icon type="ios-keypad"></Icon>
-                                <a>Category Table</a>
-                                </div>
-                            </router-link>
-                        </MenuItem>
-                        <MenuItem name="4">
-                             <router-link to="/tagtable">
-                            <div>
-                            <Icon type="ios-analytics"></Icon>
-                            <a>Tag Table</a>
-                            </div>
-                            </router-link>
-                        </MenuItem>
-                          <Submenu name="2">
-                                <template slot="title">
-                                    <Icon type="ios-contact" />
-                                </template>
-                                <MenuGroup title="Account Setttings">
-                                <router-link to="/userprofile"> <MenuItem name="3-1">Account Profile</MenuItem></router-link>
-                                <MenuItem name="3-2">Account Settings</MenuItem>
-                                </MenuGroup>
-                                <MenuGroup title="Logout">
-                                    <MenuItem name="3-4" @click="logout">Logout</MenuItem>
-                                </MenuGroup>
-                        </Submenu>
-                    </div>
-                </Menu>
-            </Header>
+          <AdminNavbar />
             <Layout>
                 <div class="management">
                  <Sider hide-trigger :style="{background: 'transparent'}">
@@ -93,6 +34,7 @@
                 <Layout :style="{padding: '24px 24px 24px'}">
                     <Content :style="{padding: '24px', minHeight: '280px'}">
                             <div id="Admin--Dashboard" class="tabcontent">
+                                <h4>{{$store.state.profile.name}}</h4>
                                 <div class="status--section">
                                     <div class="status--1">
                                         <h3>Users</h3>
@@ -131,6 +73,7 @@ import UserAccountTable from '../components/UserAccountTable'
 import PostActivityTable from '../components/PostActivityTable'
 import Tags from '../components/Tags'
 import ManageUser from '../components/ManageUsers'
+import AdminNavbar from '../components/AdminNavbar'
 
 
 export default {
@@ -144,28 +87,14 @@ export default {
         PostActivityTable,
         Tags,
         ManageUser,
+        AdminNavbar,
       },
-
-
-    props:['user','app'],
 
         data:() => {
             return{
-                isLoggedIn : false,
-                user: "",
+                // isLoggedIn : false,
             }
             },
-
-    methods: {
-
-            logout(){
-            axios.post('/api/logout', {token : this.$store.state.token})
-            .then( res => {
-                this.$store.commit('cleartToken');
-                this.$router.push('/');
-            })
-          },
-        },
 
     mounted: function(){
         TweenMax.to('.first', 1.5, {
@@ -240,14 +169,10 @@ export default {
                 y: "20",
                 ease: Expo.easeInOut
                 });
-
-          axios.get('api/user').then((res)=>{
-            this.user = res.data
-        })
     },
 
     created(){
-        this.$store.commit('updateUser', this.user)
+
     }
 
 }

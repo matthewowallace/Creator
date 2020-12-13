@@ -101,8 +101,8 @@
                                 <img :src="post.postImage" />
                             </div>
                             <div class="user-info">
-                                <h5>John Brown</h5>
-                                <h5>10h</h5>
+                                <h5>{{ $store.state.profile.name }}</h5>
+                                <h5>5hr</h5>
                             </div>
                             <div class="post-title">
                                 <h4>{{ post.title }}</h4>
@@ -120,6 +120,7 @@
                             <button class="social">
                                 <Icon type="ios-chatbubbles" size="22" />
                             </button>
+                            <CommentWrapper />
                         </div>
                         <div
                             class="Scenario-card"
@@ -175,7 +176,7 @@
                                 </Dropdown>
                             </div>
                             <div class="Scenario-info">
-                                <h5>John Brown</h5>
+                                <h5>{{ $store.state.profile.name }}</h5>
                                 <h5>10h</h5>
                             </div>
                             <div class="Scenario-title">
@@ -190,10 +191,13 @@
                             <hr />
                             <Icon type="md-heart" size="22" />
                             <Icon type="ios-chatbubbles" size="22" />
+                            <CommentWrapper />
                         </div>
                     </div>
                 </div>
-                <div class="profile--img"></div>
+                <div class="profile--img">
+                    <DashSidebar/>
+                </div>
             </div>
         </div>
         <!-- AddModal -->
@@ -236,7 +240,7 @@
                     <img :src="`${data.postImage}`" />
                     <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
                 </div>
-                <Input
+                <textarea
                     v-model="data.post_description"
                     placeholder="Enter Post Description"
                 />
@@ -343,7 +347,7 @@
                     v-model="data.Scenario_title"
                     placeholder="Enter Scenario Title"
                 />
-                <Input
+                <textarea
                     v-model="data.Scenario_description"
                     placeholder="Enter Scenario Description"
                 />
@@ -422,6 +426,8 @@
 import Axios from "axios";
 import UserProfileNavbar from "../components/UserProfileNavbar";
 import TopContributors from "../components/TopContributors";
+import DashSidebar from "../components/DashSiderbar";
+import CommentWrapper from "../components/Comments/CommentWrapper";
 export default {
     data() {
         return {
@@ -431,7 +437,7 @@ export default {
             data: {
                 title: "",
                 postImage: "",
-                post_description: "",
+                post_description: '',
                 Scenario_title: "",
                 Scenario_description: ""
             },
@@ -462,7 +468,9 @@ export default {
 
     components: {
         UserProfileNavbar,
-        TopContributors
+        TopContributors,
+        DashSidebar,
+        CommentWrapper,
     },
 
     methods: {
@@ -741,7 +749,7 @@ export default {
 
     mounted() {
         TweenMax.to(".first", 1.5, {
-            delay: 0.5,
+            delay: 3,
             top: "-100%",
             opacity: 0,
             ease: Expo.easeInOut
@@ -778,6 +786,13 @@ export default {
             0.08
         );
 
+          TweenMax.staggerFrom(".contributors div", 1.6, {
+                delay: 1.3,
+                opacity: 0,
+                y: "30",
+                ease: Expo.easeInOut
+                }, 0.08);
+
         // MEDIA
         TweenMax.staggerFrom(
             ".media ul li",
@@ -791,61 +806,6 @@ export default {
             0.08
         );
 
-        // TEXT
-        TweenMax.from(".Header-Text h1", 1.5, {
-            delay: 1.5,
-            opacity: 0,
-            y: "100%",
-            ease: Expo.easeInOut
-        });
-
-        TweenMax.from(".text h3 .hidetext", 1.5, {
-            delay: 1.2,
-            y: "100%",
-            ease: Expo.easeInOut
-        });
-
-        TweenMax.from(".text h3 .hidetext", 1.5, {
-            delay: 1.2,
-            y: "100%",
-            ease: Expo.easeInOut
-        });
-
-        TweenMax.from(".text p .hidetext", 1.5, {
-            delay: 1.3,
-            y: "100%",
-            ease: Expo.easeInOut
-        });
-
-        TweenMax.from(".text h2", 1.5, {
-            delay: 1.5,
-            opacity: 0,
-            x: "-10000",
-            ease: Expo.easeInOut
-        });
-
-        // SPONSOR
-        TweenMax.from(".sponsor img", 1.5, {
-            delay: 1.5,
-            opacity: 0,
-            y: "20",
-            ease: Expo.easeInOut
-        });
-
-        TweenMax.from(".sponsor p", 1.5, {
-            delay: 1.6,
-            opacity: 0,
-            y: "20",
-            ease: Expo.easeInOut
-        });
-
-        // DISTORTION
-        TweenMax.from(".distortion", 1.5, {
-            delay: 2,
-            opacity: 0,
-            y: "20",
-            ease: Expo.easeInOut
-        });
 
         //   axios.get('/api/user').then((res)=>{
         //         this.user = res.data
@@ -891,6 +851,18 @@ export default {
 </script>
 
 <style scoped>
+
+textarea{
+    width: 100%;
+    resize: vertical;
+    padding: 5px;
+    border: 1px solid #ccc !important;
+}
+
+::placeholder{
+    color: #ccc;
+}
+
 .feature-image {
     justify-content: center;
     align-content: center;
@@ -1016,7 +988,7 @@ export default {
 }
 
 .Scenario-title h4 {
-    font-size: 24px;
+    font-size: 16px;
     color: #fff;
     font-weight: bold;
     font-family: "Poppins", sans-serif;
@@ -1026,7 +998,7 @@ export default {
     padding: 10px;
     padding-top: 2px;
     font-size: 12px;
-    max-width: 30vw;
+    width: 200px;
 }
 
 .post-title {
@@ -1073,11 +1045,14 @@ export default {
 }
 
 .profile--img {
-    padding: 50px;
-    background-color: #ec6110;
+    position: relative;
+    padding: 8px;
+    backdrop-filter: blur(20px);
+    background-color: #303030;
+    /* animation: hue-rotate 10s linear infinite; */
     flex-grow: 1;
+    flex-wrap: wrap;
 }
-
 .brand-title {
     position: absolute;
     top: 2%;

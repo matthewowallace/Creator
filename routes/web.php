@@ -3,8 +3,9 @@
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 
 
 /*
@@ -18,7 +19,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group(['middleware'=>['protectedPage']],function(){
+// Route::group(['middleware'=>['protectedPage']],function(){
 
     Route::post('app/create_tag', [AdminController::class, 'addTag']);
     Route::get('app/get_tags', [AdminController::class, 'getTag']);
@@ -34,14 +35,14 @@ Route::group(['middleware'=>['protectedPage']],function(){
     Route::get('app/get_adminusers', [AdminController::class, 'getAdminUsers']);
     Route::post('app/edit_adminusers', [AdminController::class, 'editAdminUsers']);
     Route::post('app/delete_adminusers', [AdminController::class, 'deleteAdminUsers']);
-    Route::post('app/admin_dashboard', [AdminController::class, 'AdminLogin']);
+    Route::post('app/admin_dashboard', [LoginController::class, 'Login']);
     Route::post('app/create_role', [AdminController::class, 'addRole']);
     Route::get('app/get_roles', [AdminController::class, 'getRoles']);
     Route::post('app/edit_role', [AdminController::class, 'editRole']);
     Route::post('app/delete_role', [AdminController::class, 'deleteRole']);
     Route::get('tags', [AdminController::class, 'AllTags']);
 
-});
+// });
 
 
     Route::post('app/create_post', [UserController::class, 'addPost']);

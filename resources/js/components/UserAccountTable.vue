@@ -19,7 +19,7 @@
                 <tr v-for="(user, i) in currentusers" :key="i" v-if="currentusers.length">
                     <td><input type="checkbox"/></td>
                     <td><Tag>{{user.id}}</Tag></td>
-                    <td>{{user.fullname}}</td>
+                    <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     <td><Tag type="dot" color="success">{{user.userType}}</Tag></td>
                     <td>
@@ -38,7 +38,7 @@
                 :closable = "false"
                 >
                 <label>Fullname</label>
-                <Input type="text" v-model="data.fullname" placeholder="Enter Full Name"/>
+                <Input type="text" v-model="data.name" placeholder="Enter Full Name"/>
                 <br>
                  <label>Email</label>
                 <Input type="email" v-model="data.email" placeholder="Enter Email Name"/>
@@ -64,7 +64,7 @@
                 :closable = "false"
                 >
                  <label>Fullname</label>
-                <Input type="text" v-model="editData.fullname" placeholder="Enter Full Name"/>
+                <Input type="text" v-model="editData.name" placeholder="Enter Full Name"/>
                 <br>
                  <label>Email</label>
                 <Input type="email" v-model="editData.email" placeholder="Enter Email Name"/>
@@ -113,7 +113,7 @@
             return {
 
                 data:{
-                    fullname: '',
+                    name: '',
                     email: '',
                     password: '',
                     // userType: 'Admin',
@@ -124,7 +124,7 @@
                 isAdding : false,
                 currentusers:[],
                 editData : {
-                    fullname: '',
+                    name: '',
                     email: '',
                     password: '',
                     userType: 'Admin',
@@ -140,7 +140,7 @@
         methods: {
 
             async addAdmin(){
-            if(this.data.fullname.trim()=='') return this.error('Full name is required')
+            if(this.data.name.trim()=='') return this.error('Full name is required')
             if(this.data.email.trim()=='') return this.error('Email name is required')
             if(this.data.password.trim()=='') return this.error('Password name is required')
 			const res = await this.callApi('post', 'app/create_adminusers', this.data)
@@ -148,7 +148,7 @@
 				this.currentusers.unshift(res.data)
 				this.success('User has been added successfully!')
 				this.addtagmodal = false
-                this.data.fullname = ''
+                this.data.name = ''
                 this.data.email = ''
                 this.data.password = ''
 			}else{
@@ -164,7 +164,7 @@
         },
 
             async editUser(){
-                if(this.editData.fullname.trim()=='') return this.error('Full name is required')
+                if(this.editData.name.trim()=='') return this.error('Full name is required')
                 if(this.editData.email.trim()=='') return this.error('Email name is required')
                 // if(this.editData.password.trim()=='') return this.error('Password name is required')
                 const res = await this.callApi('post', 'app/edit_adminusers', this.editData)
@@ -187,7 +187,7 @@
             showEditModal(user, index){
                 let obj = {
                     id : user.id,
-                    fullname : user.fullname,
+                    name : user.name,
                     email: user.email,
                     userType: user.userType,
                 }

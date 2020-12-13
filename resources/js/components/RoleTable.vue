@@ -115,7 +115,12 @@
 						this.error(res.data.errors.roleName[0])
 					}
 
-				}else{
+                } else if(res.status==403){
+
+					this.error('You are not allowed to access this route');
+
+				}
+                else{
 					this.swr()
 				}
 

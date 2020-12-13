@@ -29,7 +29,7 @@
                         </template>
                         <MenuGroup title="Account Setttings">
                         <router-link to="/userprofile"> <MenuItem name="3-1">Account Profile</MenuItem></router-link>
-                        <MenuItem name="3-2">Account Settings</MenuItem>
+                        <MenuItem name="3-2" to="/accountsettings">Account Settings</MenuItem>
                         </MenuGroup>
                         <MenuGroup title="Logout">
                             <MenuItem name="3-4"><button v-on:click="logout">Logout</button></MenuItem>

@@ -1,11 +1,12 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
-use GuzzleHttp\Middleware;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +56,12 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
 
 
 
+
+});
+
+Route::group(['middleware'=> 'auth:api'],function(){
+
+    Route::post('/post/comments', [CommentController::class, 'index']);
+    Route::post('/comment', [CommentController::class, 'store']);
 
 });

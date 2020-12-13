@@ -12,6 +12,7 @@ import Category from './components/Category.vue';
 import AboutUs from './components/AboutUs.vue';
 import Role from './components/Role.vue';
 import UserProfile from './components/UserProfile.vue';
+import AccountSettings from './components/AccountSettings.vue';
 import * as  auth from './auth_services';
 
 Vue.use(Router);
@@ -61,13 +62,20 @@ const routes =[
     },
     {
         path: '/userprofile',
-        name: 'UserProfile',
+        name: 'userProfile',
         component: () => import('./components/UserProfile.vue'),
     },
     {
         path: '/admin',
         name: 'Admin',
         component: Admin,
+        beforeEnter(to, from, next){
+            if(!auth.isLoggedIn()){
+                next('/login');
+            }else{
+                next();
+            }
+        }
     },
     {
         path: '/category',
@@ -93,6 +101,11 @@ const routes =[
         path: '/role',
         name: 'Role',
         component: Role
+    },
+    {
+        path: '/accountsettings',
+        name: 'AccountSettings',
+        component: AccountSettings
     },
 
 ]

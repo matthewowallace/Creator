@@ -87,6 +87,13 @@ body::-webkit-scrollbar-thumb {
   border: 0px solid var(--scrollbarBG);
 }
 
+.VueCarousel-inner {
+    display: flex;
+    flex-direction: row;
+    backface-visibility: hidden;
+    height: 300px !important;
+}
+
 ::placeholder{
     color:#686868;
 }

@@ -24,6 +24,16 @@ class LoginController extends Controller
         $user->password = bcrypt($request->password);
 
        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+
+            $user = Auth::user();
+            if($user->role->isAdmin == 1){
+                return redirect('/admin');
+            }else{
+                return redirect('/dashboard');
+            }
+
+
+
             return response()->json([
                 'message' => 'Invalid username or password',
                 'status_code' => 401

@@ -16,7 +16,7 @@
 
                 <tr v-for="user in users" :key="user.id">
                     <td><input type="checkbox"/></td>
-                    <td>{{user.fullname}}</td>
+                    <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.userType}}</td>
                     <td>
