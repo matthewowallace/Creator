@@ -22,16 +22,14 @@
                  </router-link>
                 <div class="register-form">
                 <div class="sign--form">
-                    <h3 class="sign-header">Forgot</h3>
+                    <h3 class="sign-header">Forgot Password Request</h3>
                     <p class="sign-para">Etnter Email account to continue reset password</p>
                     <form class="form-1" @submit.prevent="reset" action="/" method="post" novalidate="true">
 
                       <Input v-model="user.email" type="text" picture_src="mail-outline.svg" placeholder="Enter your email" />
-                      <PasswordInput v-model="user.password" placeholder="Enter your Password" :maxlength="30" />
-                       <Input v-model="user.verification_code" type="number" picture_src="mail-outline.svg" placeholder="Enter your Verification Code" />
                         <br>
                        <div class="login-btn" v-if="isLogging">
-                            <button ref="btnSubmit" type="submit" value="Submit" :disable="this.isLogging" :loading="isLogging">Register</button>
+                            <button ref="btnSubmit" type="submit" value="Submit" :disable="this.isLogging" :loading="isLogging">Reset Request</button>
                         </div>
                         <div class="login-btn-2" v-else>
                             <button>
@@ -39,18 +37,6 @@
                                 <div class="animation"><lottie-player src="https://assets8.lottiefiles.com/packages/lf20_vIuhQq.json"  background="transparent"  speed="1"  style="width: 80px; height: 80px;"  loop  autoplay></lottie-player></div>
                             </button>
                         </div>
-                            <div class="SignIn">
-                        <p>Resend Verification Code
-                             <router-link to="/forgotpasswordrequest">
-                                  <a>Resend</a>
-                             </router-link>
-                        </p></div>
-                        <div class="SignIn">
-                        <p>
-                             <router-link to="/login">
-                                  <a>Login</a>
-                             </router-link>
-                        </p></div>
                     </form>
                 </div>
             </div>
@@ -97,17 +83,10 @@ export default {
         return {
             user:{
                 email: "",
-                password: '',
-                verification_code: '',
             },
             isLogging: true,
+            btnOldHtml: '',
         }
-    },
-
-       beforeRouteEnter (to, from, next) {
-        next(vm => {
-            vm.user.email = to.params.email
-        });
     },
 
 
@@ -117,9 +96,9 @@ export default {
 
                 try{
                     this.disableSubmitiion(this.$refs.btnSubmit);
-                    const response = await auth.resetPassword(this.user);
+                    const response = await auth.resetPasswordRequest(this.user);
                     this.errors = {};
-                    this.$router.push('/login');
+                    this.$router.push({name: 'ForgotPasswordRequest', params: {email: this.user.email}});
                 } catch (error){
                   switch(error.response.status){
                       case 422:

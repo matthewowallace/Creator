@@ -14,6 +14,8 @@ import Role from './components/Role.vue';
 import UserProfile from './components/UserProfile.vue';
 import AccountSettings from './components/AccountSettings.vue';
 import * as  auth from './auth_services';
+import Forgot from './layout/Forgot.vue';
+import ForgotPasswordRequest from './layout/ForgotPasswordRequest.vue';
 
 Vue.use(Router);
 
@@ -106,6 +108,30 @@ const routes =[
         path: '/accountsettings',
         name: 'AccountSettings',
         component: AccountSettings
+    },
+    {
+        path: '/forgot',
+        name: 'Forgot',
+        component: Forgot,
+        beforeEnter(to, from, next){
+            if(!auth.isLoggedIn()){
+                next();
+            }else{
+                next('/login');
+            }
+        }
+    },
+    {
+        path: '/forgotpasswordrequest/:email',
+        name: 'ForgotPasswordRequest',
+        component: ForgotPasswordRequest,
+        beforeEnter(to, from, next){
+            if(!auth.isLoggedIn()){
+                next();
+            }else{
+                next('/login');
+            }
+        }
     },
 
 ]

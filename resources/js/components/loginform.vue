@@ -5,7 +5,9 @@
          <PasswordInput v-model="user.password" placeholder="Enter your Password" :maxlength="30" />
           <div class="errors" v-if="errors.password"><p>{{errors.password[0]}}</p></div>
         <div class="forgot">
+            <router-link to="/forgot">
              <a>Forgot Password ?</a>
+            </router-link>
         </div>
 
         <div class="login-btn" v-if="isLogging">

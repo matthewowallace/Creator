@@ -25,6 +25,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'auth'], function () {
+    Route::post('/resetPasswordRequest', [RegisterController::class, 'resetPasswordRequest']);
+    Route::post('/resetpassword', [RegisterController::class, 'resetpassword']);
     Route::post('/register', [RegisterController::class, 'register']);
     Route::post('/login', [LoginController::class, 'Login']);
     Route::group(['middleware' => 'auth:api'], function(){
