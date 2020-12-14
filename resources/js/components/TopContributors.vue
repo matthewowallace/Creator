@@ -144,6 +144,7 @@ export default {
     font-size:14px;
     font-family: 'Poppins',sans-serif;
     margin-bottom: 30px;
+    margin-left: 20px;
 }
 
 .card img {

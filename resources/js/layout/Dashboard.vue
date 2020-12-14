@@ -920,6 +920,12 @@ textarea{
     resize: vertical;
     padding: 5px;
     border: 1px solid #ccc !important;
+    background-color: transparent;
+    color:#fff;
+}
+
+label{
+    color: #fff;
 }
 
 ::placeholder{
@@ -934,6 +940,7 @@ textarea{
     width: 100%;
     overflow: hidden;
     margin-bottom: 10px;
+
 }
 
 .feature-image img {
@@ -1040,7 +1047,7 @@ textarea{
 .profile--name h3 {
     font-family: "Poppins", sans-serif !important;
     font-size: 14px;
-    margin-left: 15px;
+    margin-left: 20px;
     color: #303030;
     margin-bottom: 40px;
 }

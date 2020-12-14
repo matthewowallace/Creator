@@ -312,6 +312,12 @@ textarea{
     height: 100px;
     padding: 10px !important;
     border: 1px solid #ccc !important;
+    background-color: transparent;
+    color:#222;
+}
+
+textarea::placeholder{
+    color:#222;
 }
 
 @keyframes hue-rotate {

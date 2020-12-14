@@ -129,7 +129,7 @@ body::-webkit-scrollbar-thumb {
   -ms-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: #fff;
+  background: transparent;
   padding: 15px 40px;
   border-radius: 3px;
   width: 300px;
@@ -143,7 +143,8 @@ body::-webkit-scrollbar-thumb {
   left: 12px;
   top: calc(50% + 10px);
   transform: translateY(-50%);
-  color: #aaa;
+  color: #222;
+  font-weight: bold;
   font-family: 'Nunito',sans-serif;
   transition:
     top 0.3s ease,
@@ -294,8 +295,8 @@ body::-webkit-scrollbar-thumb {
         font-size: 14px;
         border: 1px solid #dcdee2;
         border-radius: 0px !important;
-        color: #515a6e;
-        background-color: #fff;
+        color: #fff !important;
+        background-color: transparent !important;
         background-image: none;
         position: relative;
         cursor: text;
@@ -305,6 +306,21 @@ body::-webkit-scrollbar-thumb {
         transition: border .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out;
         transition: border .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out,-webkit-box-shadow .2s ease-in-out;
     }
+
+    .ivu-upload-drag {
+    background: transparent !important;
+    border: 1px dashed #dcdee2;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s ease;
+}
+
+.ivu-upload-drag p{
+   color:#fff !important;
+}
 
     .ivu-modal-body {
         padding: 36px !important;
