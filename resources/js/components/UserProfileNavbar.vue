@@ -275,7 +275,24 @@ button:focus{
 
 .profilebody{
     text-align: center;
+    overflow-y: scroll;
+    height: 700px;
 }
+
+ ::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+ ::-webkit-scrollbar-thumb {
+  background: #a0344f;
+  border-radius: 10px;
+}
+
 
 .add-btn {
     background-color:#a0344f;
@@ -290,7 +307,9 @@ button:focus{
 
 textarea{
     width: 67%;
-    resize: vertical;
+    resize: none;
+    overflow-y: scroll;
+    height: 100px;
     padding: 10px !important;
     border: 1px solid #ccc !important;
 }

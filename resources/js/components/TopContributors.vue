@@ -49,6 +49,81 @@
                 </div>
             </div>
         </slide>
+         <slide>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-holder">
+                        <img src="../../assets/9.jpg" alt="aboutus icon" />
+                    </div>
+                    <div class="account-2">
+                        <button @click="addScenariomodal = true">Follow</button>
+                    </div>
+                     <div class="card-name">
+                        <h4>{{ $store.state.profile.name }}</h4>
+                    </div>
+                </div>
+            </div>
+        </slide>
+        <slide>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-holder">
+                        <img src="../../assets/12.jpg" alt="aboutus icon" />
+                    </div>
+                    <div class="account-2">
+                        <button @click="addScenariomodal = true">Follow</button>
+                    </div>
+                     <div class="card-name">
+                        <h4>{{ $store.state.profile.name }}</h4>
+                    </div>
+                </div>
+            </div>
+        </slide>
+        <slide>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-holder">
+                        <img src="../../assets/13.jpg" alt="aboutus icon" />
+                    </div>
+                    <div class="account-2">
+                        <button @click="addScenariomodal = true">Follow</button>
+                    </div>
+                     <div class="card-name">
+                        <h4>{{ $store.state.profile.name }}</h4>
+                    </div>
+                </div>
+            </div>
+        </slide>
+         <slide>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-holder">
+                        <img src="../../assets/14.jpg" alt="aboutus icon" />
+                    </div>
+                    <div class="account-2">
+                        <button @click="addScenariomodal = true">Follow</button>
+                    </div>
+                     <div class="card-name">
+                        <h4>{{ $store.state.profile.name }}</h4>
+                    </div>
+                </div>
+            </div>
+        </slide>
+        <slide>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-holder">
+                        <img src="../../assets/15.jpg" alt="aboutus icon" />
+                    </div>
+                    <div class="account-2">
+                        <button @click="addScenariomodal = true">Follow</button>
+                    </div>
+                     <div class="card-name">
+                        <h4>{{ $store.state.profile.name }}</h4>
+                    </div>
+                </div>
+            </div>
+        </slide>
     </carousel>
 </div>
 </template>
