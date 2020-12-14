@@ -17,6 +17,9 @@
                 <li>
                     <Icon type="logo-snapchat" size="22"/>
                 </li>
+                <li>
+                    <Icon type="logo-reddit" />
+                </li>
                 </ul>
 
             </nav>
@@ -41,7 +44,7 @@ export default {
     li{
         padding: 20px;
         font-size: 20px;
-        color:#303030;
+        color:#fff;
     }
 
     li:hover{

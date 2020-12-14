@@ -56,6 +56,7 @@ class RegisterController extends Controller
                     'name' => $user->name,
                     'random' => $random
                 );
+
                 Mail::send('emails.reset_password', $userData, function ($message){
                     $message->from('no-reply@youthcreator', 'Password Request');
                     $message->to($userData->email, $userData->name);

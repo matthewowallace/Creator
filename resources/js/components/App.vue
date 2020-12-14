@@ -255,12 +255,13 @@ body::-webkit-scrollbar-thumb {
 
     .ivu-modal-content {
         position: relative;
-        background-color: #fff;
+        background-color: transparent !important;
         border: 0;
         border-radius: 0px !important;
         background-clip: padding-box;
         -webkit-box-shadow: 0 4px 12px rgba(0,0,0,.15);
         box-shadow: 0 4px 12px rgba(0,0,0,.15);
+        backdrop-filter: blur(20px);
     }
 
     .ivu-modal-header {

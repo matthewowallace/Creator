@@ -1214,7 +1214,7 @@ textarea{
 }
 
 .add-btn {
-    background-color: #2d8cf0;
+    background-color: #a0344f;
     margin-bottom: 10px;
     padding: 12px 28px;
     font-size: 11px;
@@ -1222,6 +1222,11 @@ textarea{
     text-transform: uppercase;
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1),
         0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+}
+
+.red {
+    color: rgb(240, 56, 56);
+    font-weight: bold !important;
 }
 
 /* Menu
