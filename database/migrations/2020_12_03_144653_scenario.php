@@ -16,7 +16,7 @@ class Scenario extends Migration
         Schema::create('scenarios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('Scenario_title');
-            $table->string('Scenario_description');
+            $table->longText('Scenario_description');
             $table->timestamps();
         });
     }

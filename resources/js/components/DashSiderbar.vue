@@ -123,6 +123,7 @@ h3 {
     font-size: 10px;
     margin-top: 5px;
     color: #303030;
+    max-width: 80%;
 }
 
 .card:hover{
@@ -157,6 +158,7 @@ h3 {
     font-size: 10px;
     margin-top: 5px;
     color: #fff;
+    width:80%;
 }
 
 .scenario-card:hover{

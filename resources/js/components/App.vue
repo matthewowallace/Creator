@@ -122,6 +122,11 @@ body::-webkit-scrollbar-thumb {
         max-width: 25px;
     }
 
+.ivu-modal-footer button+button {
+    margin-left: 0px !important;
+    margin-bottom: 0;
+}
+
 .input-form{
     position: relative;
  }

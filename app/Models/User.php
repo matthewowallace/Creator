@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,6 +46,14 @@ class User extends Authenticatable
 
     public function role(){
         return $this->belongsTo('app\role');
+    }
+
+    public function isOnline(){
+        return Cache::has('active-user' . $this->id);
+    }
+
+    public function friends(){
+        return $this->belongsTo('app\friends','id','requester');
     }
 
 }

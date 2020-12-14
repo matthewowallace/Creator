@@ -17,7 +17,7 @@ class Posts extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('postImage');
-            $table->string('post_description');
+            $table->longText('post_description');
             $table->integer('views')->default(0);
             $table->timestamps();
         });

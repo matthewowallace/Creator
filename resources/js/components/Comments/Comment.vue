@@ -1,6 +1,6 @@
 <template>
     <div>
-        Comment
+        <p>{{comment}}</p>
     </div>
 </template>
 <script>
@@ -10,5 +10,10 @@ export default {
 </script>
 
 <style scoped>
+
+    p{
+        padding-left:10px;
+        padding-bottom: 3px;
+    }
 
 </style>

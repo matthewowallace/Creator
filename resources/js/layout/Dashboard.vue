@@ -115,12 +115,12 @@
                             </div>
                             <hr />
                             <Rate clearable v-model="value1" />
-                                <button>
+                            <button>
                                   <Icon  @click="addcommentmodal = true" type="ios-chatbubbles" size="22" />
                             </button>
                             <div>
                                    <div v-for="comment in comments" v-bind:key="comment.id">
-                                    <Comment :comment="comment" />
+                                    <Comment :comment="comment.Comment_description" />
                             </div>
                             </div>
                         </div>
@@ -313,11 +313,11 @@
         </Modal>
         <!-- DeleteModal -->
         <Modal v-model="DeleteModal" width="360">
-            <p slot="header" style="color: #f60; text-align: center">
+            <p slot="header" style="color: #a0344f; text-align: center">
                 <Icon type="ios-information-circle"></Icon>
                 <span>Delete confirmation?</span>
             </p>
-            <div style="text-align: center">
+            <div style="text-align: center; color: #fff;">
                 <p>Deleting removes data from database.</p>
             </div>
             <div slot="footer">
@@ -782,7 +782,7 @@ export default {
 
             const res = await this.callApi("post", "app/add_comment", data);
             if (res.status === 201) {
-                this.comment.unshift(res.data);
+                this.comments.unshift(res.data);
                 this.success("Comment has been added successfully!");
                 this.addcommentmodal = false;
                 this.comment = "";
@@ -901,7 +901,7 @@ export default {
             this.something();
         }
         if (resComment.status == 200) {
-            this.comments = res.data;
+            this.comments = resComment.data;
         } else {
             this.something();
         }
@@ -1068,7 +1068,6 @@ label{
     padding: 10px;
     padding-top: 2px;
     font-size: 12px;
-    width: 200px;
 }
 
 .post-title {
