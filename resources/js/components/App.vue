@@ -98,6 +98,16 @@ body::-webkit-scrollbar-thumb {
     color:#686868;
 }
 
+.ivu-rate {
+    display: inline-block;
+    margin: 10px 10px !important;
+    padding: 0;
+    font-size: 20px;
+    vertical-align: middle;
+    font-weight: 400;
+    font-style: normal;
+}
+
 
     a:hover{
         text-decoration: none !important;

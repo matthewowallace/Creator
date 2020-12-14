@@ -114,13 +114,15 @@
                                 </p>
                             </div>
                             <hr />
-                            <button class="social">
-                                <Icon type="md-heart" size="22" />
+                            <Rate clearable v-model="value1" />
+                                <button>
+                                  <Icon  @click="addcommentmodal = true" type="ios-chatbubbles" size="22" />
                             </button>
-                            <button class="social">
-                                <Icon type="ios-chatbubbles" size="22" />
-                            </button>
-                            <CommentWrapper />
+                            <div>
+                                   <div v-for="comment in comments" v-bind:key="comment.id">
+                                    <Comment :comment="comment" />
+                            </div>
+                            </div>
                         </div>
                         <div
                             class="Scenario-card"
@@ -189,15 +191,8 @@
                                 </p>
                             </div>
                             <hr />
-                            <Icon type="md-heart" size="22" />
-                            <button>
-                                  <Icon  @click="addcommentmodal = true" type="ios-chatbubbles" size="22" />
-                            </button>
-                            <div>
-                                   <div v-for="comment in comments" v-bind:key="comment.id">
-                                    <Comment :comment="comment" />
-                                </div>
-                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -492,6 +487,7 @@ export default {
             addcommentmodal: false,
             comment: '',
             comments: [],
+            value1: 3,
         };
     },
 
@@ -926,6 +922,10 @@ textarea{
 
 label{
     color: #fff;
+}
+
+.rate{
+    margin-left: 10px;
 }
 
 ::placeholder{
